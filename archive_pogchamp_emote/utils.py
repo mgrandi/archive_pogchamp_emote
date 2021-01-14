@@ -6,11 +6,39 @@ import arrow
 import pyhocon
 import bfa
 import attr
+import waybackpy
+from waybackpy.exceptions import WaybackError, URLError
 
 from archive_pogchamp_emote import constants as constants
 from archive_pogchamp_emote import model as model
 
 logger = logging.getLogger(__name__)
+
+
+def save_archive_of_webpage_in_wbm(url):
+    '''
+    saves a copy of the given URL in the Internet Archive wayback machine
+    and returns the archive URL
+
+    '''
+    try:
+        logger.info("saving an archive of the url `%s` in the wayback machine", url)
+
+        wayback_handle_for_url = waybackpy.Url(url, constants.HTTP_USER_AGENT)
+
+        logger.debug("calling save() on wayback handle for url: `%s`", wayback_handle_for_url)
+
+        archive = wayback_handle_for_url.save()
+        archive_url = archive.archive_url
+        logger.info("archive of url `%s` complete, url: `%s`", url, archive_url)
+    except WaybackError as e:
+        logger.exception(f"Got WaybackError when trying to save url `{url}`")
+        raise e
+    except URLError as e:
+        logger.exception(f"Got URLError when trying to save url `{url}`")
+        raise e
+
+    return archive_url
 
 
 def build_emote_config_from_argparse_args(args):

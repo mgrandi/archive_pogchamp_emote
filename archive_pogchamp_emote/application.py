@@ -55,35 +55,49 @@ class Application:
             f.write("--warc-tempdir\n")
             f.write(f"{emote_config.warc_tempdir_folder}\n")
 
-            # standard headers
-            test="TEST"
+            #########################################################################
+            # WARC headers that always get included
+            ##########################################################################
             f.write("--warc-header\n")
             f.write(f"description:twitch.tv PogChamp emote for {emote_config.emote_date.format(constants.ARROW_DATE_FORMAT)}\n")
             f.write("--warc-header\n")
             f.write(f"twitch-tv-pogchamp-streamer-name:{emote_config.streamer_name}\n")
+
+            # link to the streamer's twitch page
             f.write("--warc-header\n")
             f.write(f"twitch-tv-pogchamp-streamer-twitch-link:{emote_config.streamer_twitch_url}\n")
-            f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-streamer-twitch-link-wbm:{test}\n")
+            # f.write("--warc-header\n")
+            # f.write(f"twitch-tv-pogchamp-streamer-twitch-link-wbm:{test}\n")
+
+            # link to the streamer's social media page
+            streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(emote_config.streamer_social_media_url)
             f.write("--warc-header\n")
             f.write(f"twitch-tv-pogchamp-streamer-social-media-link:{emote_config.streamer_social_media_url}\n")
             f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-streamer-social-media-link-wbm:{test}\n")
+            f.write(f"twitch-tv-pogchamp-streamer-social-media-link-wbm:{streamer_social_media_link_archive}\n")
+
+            # link to the twitter.com post by the Twitch user account announcing the emote of the day
+            twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url)
             f.write("--warc-header\n")
             f.write(f"twitch-tv-pogchamp-twitch-tweet-link:{emote_config.twitch_twitter_post_url}\n")
             f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-twitch-tweet-link-wbm:{test}\n")
+            f.write(f"twitch-tv-pogchamp-twitch-tweet-link-wbm:{twitch_twitter_post_url_archive}\n")
+
+
             f.write("--warc-header\n")
             f.write(f"date:{emote_config.emote_date.format(constants.ARROW_DATE_FORMAT)}\n")
 
-            # custom warc headers
-
+            ##############################################################################
+            # custom warc headers, provided by the configuration file
+            ##############################################################################
             for iter_header in emote_config.warc_headers:
 
                 f.write("--warc-header\n")
                 f.write(f"{iter_header.key}:{iter_header.value}\n")
 
-            # rest of the arguments
+            #########################################################
+            # rest of the wpull arguments
+            ########################################################
             f.write("--waitretry\n")
             f.write("30\n")
             f.write("--no-robots\n")
