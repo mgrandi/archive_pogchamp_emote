@@ -12,6 +12,7 @@ youtube_dl = "^2021.1.8"
 arrow = "^0.17.0"
 logging_tree = "^1.8.1"
 waybackpy = "^2.4.1"
+attrs = "^20.3.0"
 
 [tool.poetry.dev-dependencies]
 wheel = "^0.36.2"
