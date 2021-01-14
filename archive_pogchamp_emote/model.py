@@ -13,13 +13,16 @@ class WarcHeader:
 @attr.s(auto_attribs=True, frozen=True, kw_only=True)
 class DailyPogchampEmoteConfig:
 
+    root_output_folder:pathlib.Path = attr.ib()
     warc_output_folder:pathlib.Path = attr.ib()
     youtube_dl_output_folder:pathlib.Path = attr.ib()
     warc_tempdir_folder:pathlib.Path = attr.ib()
     warc_database_name:str = attr.ib()
     warc_output_file_name:str = attr.ib()
+    warc_arguments_file_name:str = attr.ib()
     warc_input_url_list_file_name:str = attr.ib()
     warc_file_name:str = attr.ib()
+    ytdl_arguments_file_name:str = attr.ib()
     emote_date:arrow.arrow.Arrow = attr.ib()
 
     twitch_emote_id:int = attr.ib()

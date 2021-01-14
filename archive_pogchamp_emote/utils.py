@@ -1,9 +1,11 @@
 import logging
 import pathlib
+import pprint
 
 import arrow
 import pyhocon
 import bfa
+import attr
 
 from archive_pogchamp_emote import constants as constants
 from archive_pogchamp_emote import model as model
@@ -41,13 +43,16 @@ def build_emote_config_from_argparse_args(args):
     root_folder_with_date = args.root_output_folder / date_str
 
     # set folder paths that require the date
+    builder = builder.root_output_folder(root_folder_with_date)
     builder = builder.warc_output_folder(root_folder_with_date / "warc")
     builder = builder.youtube_dl_output_folder(root_folder_with_date / "twitter_video")
     builder = builder.warc_tempdir_folder(root_folder_with_date / "warc")
     builder = builder.warc_database_name(constants.WPULL_DATABASE_FORMAT.format(date_str))
     builder = builder.warc_output_file_name(constants.WPULL_OUTPUT_FILE_FORMAT.format(date_str))
+    builder = builder.warc_arguments_file_name(constants.WPULL_ARGS_FILE_FORMAT.format(date_str))
     builder = builder.warc_input_url_list_file_name(constants.WPULL_INPUT_URL_LIST_FORMAT.format(date_str))
     builder = builder.warc_file_name(constants.WPULL_WARC_FILE_FORMAT.format(date_str))
+    builder = builder.ytdl_arguments_file_name(constants.YTDL_ARGS_FILE_FORMAT.format(date_str))
     builder = builder.emote_date(date_str)
 
     # stuff that we read from the configuration file
@@ -69,16 +74,13 @@ def build_emote_config_from_argparse_args(args):
 
 
 
-    logger.info("building DailyPogchampEmoteConfig object")
+    logger.debug("building DailyPogchampEmoteConfig object")
 
     final_config = builder.build()
 
-    import pprint,attr
-    logger.info("final DailyPogchampEmoteConfig object: `%s`", pprint.pformat(attr.asdict(final_config)))
+    logger.debug("DailyPogchampEmoteConfig object built successfully: `%s`", pprint.pformat(attr.asdict(final_config)))
 
     return final_config
-
-
 
 
 def validate_hocon(hocon):

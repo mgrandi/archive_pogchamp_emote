@@ -19,3 +19,12 @@ CONFIG_PATH_STREAMER_TWITCH_URL = "streamer_twitch_url"
 CONFIG_PATH_STREAMER_NAME = "streamer_name"
 CONFIG_PATH_DATE = "date"
 CONFIG_PATH_WARC_HEADERS = "warc_headers"
+
+WPULL_INPUT_URLS_FORMAT_LIST = [
+    "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/dark/1.0",
+    "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/dark/2.0",
+    "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/dark/3.0",
+    "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/light/1.0",
+    "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/light/2.0",
+    "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/light/3.0",
+]
