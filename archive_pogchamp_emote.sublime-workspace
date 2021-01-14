@@ -1,0 +1,695 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"type_",
+				"type_to_create_kwargs"
+			],
+			[
+				"type_t",
+				"type_to_create"
+			],
+			[
+				"type_to_",
+				"type_to_create_kwargs"
+			],
+			[
+				"TlFileDefin",
+				"TlFileDefinitionType"
+			],
+			[
+				"TlFileDe",
+				"TlFileDefinitionType"
+			],
+			[
+				"Parse",
+				"ParseResults"
+			],
+			[
+				"pe_full_",
+				"pe_full_line_tdlib_type_def"
+			],
+			[
+				"final_ex",
+				"final_expression_key"
+			],
+			[
+				"runnin",
+				"running_suffix"
+			],
+			[
+				"running",
+				"running_prefix"
+			],
+			[
+				"BASIC_TYPE",
+				"BASIC_TYPE_VECTOR_REGEX"
+			],
+			[
+				"regex",
+				"regex_result"
+			],
+			[
+				"is",
+				"isinstance"
+			],
+			[
+				"default",
+				"default_value"
+			],
+			[
+				"iter_p",
+				"iter_param_def"
+			],
+			[
+				"FUNC",
+				"function_name"
+			],
+			[
+				"TDLIB",
+				"TDLIB_FUNC_VAR_NAME"
+			],
+			[
+				"as",
+				"as_tdlib_json"
+			],
+			[
+				"asdic",
+				"asdict_result"
+			],
+			[
+				"attr",
+				"attr_asdict_filter_exclude_type"
+			],
+			[
+				"params_",
+				"params_str_list"
+			],
+			[
+				"iter_",
+				"iter_function_def"
+			],
+			[
+				"ex",
+				"extends_from"
+			],
+			[
+				"root_t",
+				"root_type_name"
+			],
+			[
+				"abst",
+				"abstract_type_dict"
+			],
+			[
+				"output",
+				"output_file_path"
+			],
+			[
+				"src",
+				"src_lineno"
+			],
+			[
+				"source_line",
+				"source_line_number"
+			],
+			[
+				"RESULT",
+				"RESULT_NAME_SOURCE_LINE_NUMBER"
+			],
+			[
+				"result",
+				"RESULT_NAME_RETURN_TYPE"
+			],
+			[
+				"RESULT_N",
+				"RESULT_NAME_PARAM_TYPE"
+			],
+			[
+				"RESULT_NAME_",
+				"RESULT_NAME_PARAM_NAME"
+			],
+			[
+				"result_name_pa",
+				"RESULT_NAME_PARAM_NAME"
+			],
+			[
+				"extends",
+				"extends_from_abc"
+			],
+			[
+				"orig_line_",
+				"original_line_no"
+			],
+			[
+				"subps",
+				"subparser_name"
+			],
+			[
+				"resu",
+				"result_file_def"
+			],
+			[
+				"final",
+				"final_expression_key"
+			],
+			[
+				"final_",
+				"final_expression_value"
+			],
+			[
+				"pypars",
+				"pyparsing_debug_logging_enabled"
+			],
+			[
+				"pypar",
+				"pyparsing_debug_logging_is_enabled"
+			],
+			[
+				"pyparsing",
+				"pyparsingLoggingStartDebugAction"
+			],
+			[
+				"ski",
+				"skip_n_lines"
+			],
+			[
+				"ou",
+				"output_file_path"
+			],
+			[
+				"TlClass",
+				"TlClassDefinition"
+			],
+			[
+				"class_name",
+				"class_name_abc_delim"
+			],
+			[
+				"param_name",
+				"param_name_type_delim"
+			],
+			[
+				"system",
+				"system_version"
+			],
+			[
+				"use",
+				"use_secret_chats"
+			],
+			[
+				"func_",
+				"func_client_send"
+			],
+			[
+				"func",
+				"func_client_destroy"
+			],
+			[
+				"func_clie",
+				"func_client_create"
+			],
+			[
+				"Tdlib",
+				"TdlibHandle"
+			],
+			[
+				"Td",
+				"TdlibHandle"
+			],
+			[
+				"td_json_clie",
+				"td_json_client_destroy"
+			],
+			[
+				"td_json_lcient",
+				"td_json_client_create"
+			],
+			[
+				"fatal",
+				"fatal_error_callback"
+			],
+			[
+				"excep",
+				"exception_list"
+			],
+			[
+				"code_",
+				"code_snippet_obj"
+			],
+			[
+				"iter_pro",
+				"iter_problem_file"
+			],
+			[
+				"code",
+				"code_snippets"
+			],
+			[
+				"language",
+				"language_slug"
+			],
+			[
+				"prog",
+				"programming_languages"
+			],
+			[
+				"programming",
+				"programming_languages_to_use"
+			],
+			[
+				"comment",
+				"comment_characters"
+			],
+			[
+				"know",
+				"known_language_slug_to_file_ext_dict"
+			],
+			[
+				"Sing",
+				"SingleLeetcodeProblem"
+			],
+			[
+				"SingleLeetcodeProblem",
+				"SingleLeetcodeProblemCodeSnippet"
+			],
+			[
+				"langu",
+				"language_slug"
+			],
+			[
+				"JMES",
+				"JMESPATH_Q_CODE_SNIPPET_LANGUAGE"
+			],
+			[
+				"text",
+				"text_converter"
+			],
+			[
+				"csrf_",
+				"csrf_token_from_cookie"
+			],
+			[
+				"graph",
+				"graphql_response_req"
+			],
+			[
+				"csrf",
+				"csrf_token_from_cookie"
+			],
+			[
+				"login",
+				"login_page_req"
+			],
+			[
+				"JM",
+				"JMESPATH_Q_QUESTION_ID"
+			],
+			[
+				"parsed_",
+				"parsed_questions_dict"
+			],
+			[
+				"jmes",
+				"jmespath_search_result"
+			],
+			[
+				"JME",
+				"JMESPATH_Q_PAID_ONLY"
+			],
+			[
+				"jmespath_search",
+				"jmespath_search_result"
+			],
+			[
+				"response",
+				"response_dict"
+			],
+			[
+				"J",
+				"JMESPATH_API_PROBLEMS_ALL_SEARCH_QUERY"
+			],
+			[
+				"Single",
+				"SingleLeetcodeProblemCodeSnippet"
+			],
+			[
+				"problem",
+				"problems_set_all_req"
+			],
+			[
+				"home",
+				"home_page_req"
+			],
+			[
+				"Request",
+				"UrlRequest"
+			],
+			[
+				"request",
+				"request_to_make"
+			],
+			[
+				"Use",
+				"USER_AGENT_STRING"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 0,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"plugins",
+				"Plugin Development: Profile Events"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 130.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/auror/Code/Personal/git/archive_pogchamp_emote"
+	],
+	"file_history":
+	[
+		"/C/Users/auror/Code/Personal/archive_pogchamp_emote/README.md",
+		"/C/Users/auror/Code/Personal/archive_pogchamp_emote/pyproject.toml",
+		"/C/Users/auror/Code/Personal/archive_pogchamp_emote/tests/test_archive_pogchamp_emote.py",
+		"/C/Users/auror/Desktop/twitch_emotes_pogchamp/emotes_per_day/_TEMPLATE/2021-MM-YY_twitch-tv_pogchamp_emote_wpull_arguments.txt",
+		"/C/Users/auror/Desktop/twitch_emotes_pogchamp/emotes_per_day/2021-01-13/2021-01-13_twitch-tv_pogchamp_emote_youtube-dl_arguments.txt",
+		"/C/Users/auror/Desktop/twitch_emotes_pogchamp/emotes_per_day/2021-01-13/2021-01-13_twitch-tv_pogchamp_emote_wpull_url_list.txt",
+		"/C/Users/auror/Desktop/ps_store/store regions plaintext.txt",
+		"/C/Users/auror/Desktop/ps_store/laststand/cloudinit_files/wget_at_args_ar-sa.sh",
+		"/C/Users/auror/Desktop/ps_store/laststand/cloudinit_files/wget_at-url_list_ar-sa.txt",
+		"/C/Users/auror/Desktop/2018-03-24 - auroraborealis@adelieland.eu backup codes.txt",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser/model.py",
+		"/C/Users/auror/Temp/output1.json",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/.gitignore",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser/parser.py",
+		"/C/Users/auror/.virtualenvs/telegram_tl_parser-ZtScPhmT/Lib/site-packages/pyparsing.py",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser/constants.py",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser/gen.py",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/commands.txt",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/todo.txt",
+		"/C/Users/auror/Temp/attrs_output.py",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/docs/notes.md",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser/utils.py",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/docs/example_tl_files/td_api_gitrev-e37f7d1_2019-11-21.tl",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/docs/example_tl_files/custom_test_file.tl",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/docs/pyparsing_notes.md",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/parse_tl_file.py",
+		"/C/Users/auror/Temp/tmplog.log",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser/output.py",
+		"/C/Users/auror/Temp/temp.json",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/Pipfile",
+		"/C/Users/auror/Temp/temp3.json",
+		"/C/Users/auror/Downloads/ActionScript.docset/Contents/Resources/docSet.dsidx-shm",
+		"/C/Users/auror/Downloads/ActionScript.docset/Contents/Resources/docSet.mom",
+		"/C/Users/auror/Downloads/ActionScript.docset/Contents/Resources/docSet.tokencache",
+		"/C/Users/auror/Temp/temp2.json",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser.sublime-project",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/docs/example_tl_files/td_api_gitrev-e37f7d1.tl",
+		"/C/Users/auror/Desktop/output.py",
+		"/C/Users/auror/Desktop/output.json",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/docs/example_tl_files/td_api_small.tl",
+		"/C/Users/auror/Code/2019 Interview Stuff/Microsoft/Microsoft Interview Path 1 (Brad Burns)/2019-12-03 - microsoft - brad burns phone interview code.txt",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/pytelegram_dl/_test.py",
+		"/C/Users/auror/duplicity_exclude_list_linux_filepaths.txt",
+		"/C/Users/auror/duplicity_exclude_list_original.txt",
+		"/C/Users/auror/Desktop/manifest.txt",
+		"/C/Users/auror/Desktop/manifest2.txt",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/todo.txt",
+		"/C/Users/auror/Desktop/test2.txt",
+		"/C/Users/auror/Temp/duplicity changed files 20191126.txt",
+		"/C/Users/auror/Programs/run_duplicity.sh",
+		"/C/Users/auror/Desktop/Wire-markgrandi-Backup_2019-11-21.desktop_wbu",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/README.md",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/LICENSE",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/td_api_small.tl",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/td_api.tl",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/notes.md",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/tmp.py",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/markdown_tesitng.py",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/td_api_small.t",
+		"/C/Users/auror/Code/Personal/telegram_tl_parser/telegram_tl_parser/__init__.py",
+		"/C/Users/auror/Desktop/test.reg",
+		"/C/Users/auror/Desktop/putty example session2.reg",
+		"/C/Users/auror/Desktop/putty example session.reg",
+		"/C/Users/auror/Desktop/test repo perf.json",
+		"/C/Users/auror/Desktop/bttv_settings.backup",
+		"/C/Users/auror/Desktop/1password_link_not_working_raw_email.txt",
+		"/C/Users/auror/Code/2019 Interview Questions/Splunk/2019-11-15 - Splunk Phone Interview/splunk interview scratch pad.txt",
+		"/C/Users/auror/Desktop/Mark Grandi-Windows.onepassword7-license-win",
+		"/C/Users/auror/Desktop/partitionlabels.py",
+		"/C/Users/auror/Code/Personal/tl_scheme/td_api.tl",
+		"/C/Users/auror/Code/ThirdParty/td_built/include/td/telegram/td_log.h",
+		"/C/Users/auror/Code/ThirdParty/td_built/include/td/telegram/td_api.hpp",
+		"/C/Users/auror/Code/ThirdParty/td_built/include/td/telegram/td_json_client.h",
+		"/C/Users/auror/Desktop/splunk interview scratch pad.txt",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/scratch/example.py",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/configuration.conf.TEMPLATE.conf",
+		"/C/Users/auror/AppData/Roaming/Sublime Text 3/Installed Packages/HOCON Syntax Highlighting.sublime-package",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/pytelegram_dl/__init__.py",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/README.md",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/Pipfile",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/Pipfile.lock",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/lib/README.md",
+		"/C/ProgramData/chocolatey/bin/_processed.txt",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/.gitignore",
+		"/C/Users/auror/Code/ThirdParty/td/memprof/memprof.cpp",
+		"/C/Users/auror/Code/ThirdParty/td/bitbucket-pipelines.yml",
+		"/C/Users/auror/Code/ThirdParty/td/.gitignore",
+		"/C/Users/auror/Code/ThirdParty/td/auto/git_info.h",
+		"/C/Users/auror/Code/ThirdParty/td/.gitattributes",
+		"/C/Users/auror/Code/ThirdParty/td/.clang-format",
+		"/C/Users/auror/Code/ThirdParty/td/cmake-build-debug/compile_commands.json",
+		"/C/Users/auror/Code/Personal/pytelegram_dl/example.py",
+		"/C/Users/auror/Code/ThirdParty/td/cmake-build-debug/CMakeCache.txt",
+		"/C/Python38/Lib/ctypes/__init__.py",
+		"/C/Users/auror/Code/ThirdParty/td_built/lib/cmake/Td/TdConfigVersion.cmake",
+		"/C/Users/auror/Code/ThirdParty/vcpkg/bootstrap-vcpkg.bat",
+		"/C/Users/auror/.chatty/cache/emoticon_sizes",
+		"/C/Users/auror/.chatty/settings",
+		"/C/Users/auror/.chatty/login",
+		"/C/Users/auror/.chatty/backup/backup_meta",
+		"/C/Users/auror/AppData/Roaming/Python/Python38/Scripts/pasteurize-script.py",
+		"/C/Users/auror/Temp/dl_leetcode_problems.log",
+		"/C/Users/auror/Temp/dl_leetcode_target_path/1321 - Get Equal Substrings Within Budget/1321_get-equal-substrings-within-budget.py",
+		"/C/Users/auror/Temp/dl_leetcode_target_path/1341 - Split a String in Balanced Strings/1341_split-a-string-in-balanced-strings.py",
+		"/C/Users/auror/AppData/Roaming/Python/Python38/Scripts/duplicity",
+		"/C/Users/auror/Downloads/duplicity-0.8.05/bin/duplicity",
+		"/C/Users/auror/Code/ThirdParty/librsync/cmake_install.cmake",
+		"/C/Users/auror/Code/ThirdParty/librsync/CMakeCache.txt",
+		"/C/Users/auror/Code/ThirdParty/librsync/CMakeLists.txt",
+		"/C/Users/auror/Downloads/duplicity-0.8.05/README",
+		"/C/Users/auror/AppData/Local/EpicGamesLauncher/Saved/Logs/EpicGamesLauncher.log",
+		"/C/Users/auror/AppData/Local/EpicGamesLauncher/Saved/Logs/SelfUpdatePrereqInstall.log",
+		"/C/Program Files (x86)/Epic Games/Launcher/Portal/SelfUpdateStaging/Install/Portal/Content/Localization/App/en/App.locres",
+		"/C/Program Files (x86)/Epic Games/Launcher/Portal/SelfUpdateStaging/Install/Portal/SysFiles/BuildNotifications.json",
+		"/C/Users/auror/Temp/dl_leetcode_target_path/1 - Two Sum/1_two-sum.py",
+		"/C/Users/auror/putty_keys/mgrandi_github_alcidae_laptop_rsa4096.pub",
+		"/C/Users/auror/Temp/dl_leetcode_target_path/142 - Linked List Cycle II/142_linked-list-cycle-ii.py",
+		"/C/Users/auror/Code/Personal/leetcode_downloader/loggingcfg.json",
+		"/C/Users/auror/Code/Personal/leetcode_downloader/example_requests_responses/model.py",
+		"/C/Users/auror/Temp/loggingcfg.txt",
+		"/C/Users/auror/Code/Personal/leetcode_downloader/example_requests_responses/graphql_questionData_request.txt",
+		"/C/Users/auror/Code/Personal/leetcode_downloader/Pipfile",
+		"/C/Users/auror/Code/Personal/leetcode_downloader/log.txt",
+		"/C/Users/auror/Calibre Library/Erin Hunter/Warriors_ Omen of the Stars #1_ The (11)/index-1.html",
+		"/C/Users/auror/Calibre Library/Erin Hunter/Warriors_ Omen of the Stars #1_ The (11)/Warriors_ Omen of the Stars #1_ - Erin Hunter.md",
+		"/C/Users/auror/AppData/Roaming/SumatraPDF/SumatraPDF-settings.txt",
+		"/C/Users/auror/Code/Personal/EpicTakeHomeTestMarkGrandi/docs/algorithm notes.txt",
+		"/C/Users/auror/Code/Personal/leetcode_downloader/graphql_questionData_response.txt"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 104.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Git Formats/Git Ignore.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "archive_pogchamp_emote.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": false,
+	"side_bar_visible": true,
+	"side_bar_width": 237.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

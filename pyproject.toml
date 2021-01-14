@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "archive-pogchamp-emote"
+version = "0.1.0"
+description = "archives the current pogchamp emote for the current day based on a config file"
+authors = ["Mark Grandi <markgrandi@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyhocon = "^0.3.57"
+youtube_dl = "^2021.1.8"
+arrow = "^0.17.0"
+logging_tree = "^1.8.1"
+waybackpy = "^2.4.1"
+
+[tool.poetry.dev-dependencies]
+wheel = "^0.36.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
