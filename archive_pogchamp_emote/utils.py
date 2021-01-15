@@ -1,6 +1,8 @@
 import logging
 import pathlib
 import pprint
+import typing
+import subprocess
 
 import arrow
 import pyhocon
@@ -15,6 +17,26 @@ from archive_pogchamp_emote import model as model
 
 logger = logging.getLogger(__name__)
 
+
+def check_completedprocess_for_acceptable_exit_codes(
+    completed_process_obj:subprocess.CompletedProcess,
+    acceptable_exit_codes:typing.Sequence[int]):
+    ''' sees if a `subprocess.CompletedProcess` object has an acceptable exit code
+    if not, we call subprocess.CompletedProcess.check_returncode() which will throw an exception
+
+    @param completed_process_obj - the subprocess.CompletedProcess object to check
+    @param acceptable_exit_codes - the list of integers of acceptable exit codes
+    @throws `subprocess.CalledProcessError` if the exit code is not in the acceptable list
+    '''
+
+    logger.debug("checking return code: acceptable: `%s`, CompletedProcess return code: `%s`",
+        acceptable_exit_codes, completed_process_obj.returncode)
+
+    # throw an exception if the exit code is not in our acceptble list
+    # this assumes that 0 is always a valid exit code, since `check_returncode()` won't
+    # throw an exception if the exit code is 0
+    if not completed_process_obj.returncode in acceptable_exit_codes:
+        completed_process_obj.check_returncode()
 
 def youtube_dl_progress_hook(logger_to_use):
     '''

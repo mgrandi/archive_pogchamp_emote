@@ -1,5 +1,7 @@
 import logging
 import pprint
+import subprocess
+import sys
 
 from archive_pogchamp_emote import model as model
 from archive_pogchamp_emote import utils as utils
@@ -25,6 +27,8 @@ class Application:
 
         emote_config = utils.build_emote_config_from_argparse_args(self.args)
 
+        wpull_pex_path = self.args.wpull_pex_path
+
         folders_to_create_if_they_dont_exist = [
             emote_config.root_output_folder,
             emote_config.youtube_dl_output_folder,
@@ -35,8 +39,9 @@ class Application:
             if not iter_folder_path.exists():
                 logger.info("creating folder `%s` because it doesn't exist yet", iter_folder_path)
                 iter_folder_path.mkdir()
+                logger.info("folder creation was successful")
             else:
-                logger.info("folder `%s` already exists", iter_folder_path)
+                logger.info("folder `%s` already exists, don't need to recreate it", iter_folder_path)
 
         wpull_url_list_path = emote_config.root_output_folder / emote_config.warc_input_url_list_file_name
 
@@ -48,6 +53,8 @@ class Application:
                 url_to_write = iter_url.format(emote_config.twitch_emote_id)
                 f.write(f"{url_to_write}\n")
                 f.write("\n")
+
+        logger.info("writing wpull url list was successful")
 
         # write wpull arguments file
         wpull_arguments_path = emote_config.root_output_folder / emote_config.warc_arguments_file_name
@@ -120,7 +127,7 @@ class Application:
             f.write("--delete-after\n")
             f.write("--warc-append\n")
 
-
+        logger.info("writing wpull arguments was successful")
 
         if emote_config.twitch_twitter_post_is_video:
             # create youtube-dl arguments
@@ -144,6 +151,8 @@ class Application:
                 "noprogress": True,
                 "progress_hooks": [utils.youtube_dl_progress_hook(ytdl_logger)],
                 "logger": ytdl_logger,
+                # this seems to output extra stuff to both stdout and the ytdl logger, should report a bug about this...
+                # "verbose": True,
             }
 
             logger.debug("youtube-dl arguments: `%s`", ytdl_arguments_dict)
@@ -156,16 +165,42 @@ class Application:
 
                 f.write(pprint.pformat(ytdl_arguments_dict))
 
-            # now download the twitter video
+            logger.info("writing youtube-dl arguments was successful")
 
+            # now download the twitter video
 
             logger.info("Downloading any twitter videos to `%s`", emote_config.youtube_dl_output_folder)
             utils.save_video_with_youtube_dl(ytdl_arguments_dict, emote_config.twitch_twitter_post_url)
+            logger.info("video download successful")
 
         else:
             logger.info("config has marked that the Twitch twitter post was not a video, not calling youtube-dl")
 
             no_video_txt_path = emote_config.youtube_dl_output_folder / "no_video.txt"
             logger.info("writing `%s`", no_video_txt_path)
+
             with open(no_video_txt_path, "w", encoding="utf-8") as f:
                 f.write(f"no video because the configuration file specified that the twitter post `{emote_config.twitch_twitter_post_url}` had no video, so we skipped downloading it")
+
+            logger.info("writing no_video.txt was successful")
+
+
+        # now call wpull
+        wpull_argument_list = [
+            sys.executable,
+            wpull_pex_path,
+            f"@{wpull_arguments_path}"
+        ]
+
+        logger.info("executing wpull with the arguments: `%s`", wpull_argument_list)
+        try:
+            # don't use `check=True` cause we need to check the status codes , and subprocess.run() doesn't have a built in
+            # mechanism to do that
+            wpull_result = subprocess.run(wpull_argument_list, capture_output=True)
+            utils.check_completedprocess_for_acceptable_exit_codes(wpull_result, constants.ACCEPTABLE_WPULL_EXIT_CODES)
+        except subprocess.CalledProcessError as e:
+            logger.error("error running wpull: Exception: `%s`, output: `%s`, stderr: `%s`",
+                e, e.output, e.stderr)
+            raise e
+
+        logger.info("executing wpull was successful")

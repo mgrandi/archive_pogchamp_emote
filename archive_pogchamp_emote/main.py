@@ -36,6 +36,11 @@ def main():
         type=utils.isDirectoryType,
         required=True,
         help="the root folder that we put everything else in ")
+    parser.add_argument("--wpull-pex-path",
+        dest="wpull_pex_path",
+        type=utils.isFileType(True),
+        required=True,
+        help="the path to the wpull PEX that we will be executing to archive the emote")
     parser.add_argument("--log-to-file",
         dest="log_to_file",
         type=utils.isFileType(False),
