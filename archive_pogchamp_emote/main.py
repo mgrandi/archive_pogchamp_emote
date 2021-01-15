@@ -79,6 +79,7 @@ def main():
             file_handler.setFormatter(logging_formatter)
             root_logger.addHandler(file_handler)
 
+        root_logger.debug("argv: `%s`", sys.argv)
         root_logger.debug("Parsed arguments: %s", parsed_args)
         root_logger.debug("Logger hierarchy:\n%s", logging_tree.format.build_description(node=None))
 
