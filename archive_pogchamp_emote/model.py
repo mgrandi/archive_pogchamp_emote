@@ -39,4 +39,5 @@ class DailyPogchampEmoteConfig:
     streamer_name:str = attr.ib()
 
     warc_headers:typing.Sequence[WarcHeader] = attr.ib()
+    additional_urls:typing.Sequence[str] = attr.ib()
 

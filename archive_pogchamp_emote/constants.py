@@ -20,6 +20,7 @@ CONFIG_PATH_STREAMER_TWITCH_URL = "streamer_twitch_url"
 CONFIG_PATH_STREAMER_NAME = "streamer_name"
 CONFIG_PATH_DATE = "date"
 CONFIG_PATH_WARC_HEADERS = "warc_headers"
+CONFIG_PATH_ADDITIONAL_URLS = "additional_urls"
 
 WPULL_INPUT_URLS_FORMAT_LIST = [
     "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/dark/1.0",

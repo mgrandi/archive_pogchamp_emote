@@ -49,9 +49,15 @@ class Application:
         logger.info("writing wpull url list to `%s`", wpull_url_list_path)
 
         with open(wpull_url_list_path, "w", encoding="utf-8") as f:
+
+            # write the base twitch emote URLs
             for iter_url in constants.WPULL_INPUT_URLS_FORMAT_LIST:
                 url_to_write = iter_url.format(emote_config.twitch_emote_id)
                 f.write(f"{url_to_write}\n")
+
+            # write any additional urls the user may have provided in the configuration
+            for iter_url in emote_config.additional_urls:
+                f.write(f"{iter_url}\n")
 
         logger.info("writing wpull url list was successful")
 

@@ -185,13 +185,15 @@ def build_emote_config_from_argparse_args(args):
 
     builder = builder.warc_headers(warc_header_list)
 
+    additional_urls = root_config_section[constants.CONFIG_PATH_ADDITIONAL_URLS]
 
+    builder = builder.additional_urls(additional_urls)
 
     logger.debug("building DailyPogchampEmoteConfig object")
 
     final_config = builder.build()
 
-    logger.debug("DailyPogchampEmoteConfig object built successfully: `%s`", pprint.pformat(attr.asdict(final_config)))
+    logger.debug("DailyPogchampEmoteConfig object built successfully:\n`%s`", pprint.pformat(attr.asdict(final_config)))
 
     return final_config
 
