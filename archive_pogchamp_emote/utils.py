@@ -8,11 +8,24 @@ import bfa
 import attr
 import waybackpy
 from waybackpy.exceptions import WaybackError, URLError
+import youtube_dl
 
 from archive_pogchamp_emote import constants as constants
 from archive_pogchamp_emote import model as model
 
 logger = logging.getLogger(__name__)
+
+
+def save_video_with_youtube_dl(ytdl_args_dict, url):
+    '''
+    download a url with youtube-dl, given the arguments and a url to download
+
+    see https://github.com/ytdl-org/youtube-dl#embedding-youtube-dl
+    '''
+
+
+    with youtube_dl.YoutubeDL(ytdl_args_dict) as ydl:
+        ydl.download([url])
 
 
 def save_archive_of_webpage_in_wbm(url):
@@ -21,24 +34,33 @@ def save_archive_of_webpage_in_wbm(url):
     and returns the archive URL
 
     '''
-    try:
-        logger.info("saving an archive of the url `%s` in the wayback machine", url)
+    logger.info("saving an archive of the url `%s` in the wayback machine", url)
+    error_list = []
 
-        wayback_handle_for_url = waybackpy.Url(url, constants.HTTP_USER_AGENT)
+    # loop until we get a valid result since it seems to not return a result a lot of
+    # the time , probably because it takes too long and is queued?
+    # also, do +1 because we start at index 1 here
+    for iter_try_idx in range(1, constants.WAYBACK_ATTEMPT_MAX + 1):
+        try:
+            logger.debug("try `%s/%s` on url `%s`", iter_try_idx, constants.WAYBACK_ATTEMPT_MAX, url)
+            wayback_handle_for_url = waybackpy.Url(url, constants.HTTP_USER_AGENT)
 
-        logger.debug("calling save() on wayback handle for url: `%s`", wayback_handle_for_url)
+            logger.debug("calling save() on wayback handle for url: `%s`", wayback_handle_for_url)
 
-        archive = wayback_handle_for_url.save()
-        archive_url = archive.archive_url
-        logger.info("archive of url `%s` complete, url: `%s`", url, archive_url)
-    except WaybackError as e:
-        logger.exception(f"Got WaybackError when trying to save url `{url}`")
-        raise e
-    except URLError as e:
-        logger.exception(f"Got URLError when trying to save url `{url}`")
-        raise e
+            archive = wayback_handle_for_url.save()
+            archive_url = archive.archive_url
+            logger.info("archive of url `%s` complete, url: `%s`", url, archive_url)
+        except WaybackError as e:
+            logger.debug(f"Got WaybackError when trying to save url `{url}`: `{e}`")
+            error_list.append(e)
+            continue
+        except URLError as e:
+            # don't continue here, this means we screwed up when providing
+            # the url
+            logger.debug(f"Got URLError when trying to save url `{url}`")
+            raise e
 
-    return archive_url
+        return archive_url
 
 
 def build_emote_config_from_argparse_args(args):
