@@ -110,6 +110,7 @@ def build_emote_config_from_argparse_args(args):
 
     builder = builder.twitch_emote_id(root_config_section[constants.CONFIG_PATH_TWITCH_EMOTE_ID])
     builder = builder.twitch_twitter_post_url(root_config_section[constants.CONFIG_PATH_TWITCH_TWITTER_POST_URL])
+    builder = builder.twitch_twitter_post_is_video(root_config_section[constants.CONFIG_PATH_TWITCH_TWTITER_POST_IS_VIDEO])
     builder = builder.streamer_social_media_url(root_config_section[constants.CONFIG_PATH_STREAMER_SOCIAL_MEDIA_URL])
     builder = builder.streamer_twitch_url(root_config_section[constants.CONFIG_PATH_STREAMER_TWITCH_URL])
     builder = builder.streamer_name(root_config_section[constants.CONFIG_PATH_STREAMER_NAME])

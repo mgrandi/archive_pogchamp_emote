@@ -14,6 +14,7 @@ CONFIG_PATH_ROOT_SECTION = "archive_pogchamp_emote"
 
 CONFIG_PATH_TWITCH_EMOTE_ID = "twitch_emote_id"
 CONFIG_PATH_TWITCH_TWITTER_POST_URL = "twitch_twitter_post_url"
+CONFIG_PATH_TWITCH_TWTITER_POST_IS_VIDEO = "twitch_twitter_post_is_video"
 CONFIG_PATH_STREAMER_SOCIAL_MEDIA_URL = "streamer_social_media_url"
 CONFIG_PATH_STREAMER_TWITCH_URL = "streamer_twitch_url"
 CONFIG_PATH_STREAMER_NAME = "streamer_name"
