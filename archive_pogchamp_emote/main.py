@@ -49,12 +49,13 @@ def main():
 
 
     try:
+        root_logger = logging.getLogger()
+
         parsed_args = parser.parse_args()
 
 
         # set up logging stuff
         logging.captureWarnings(True) # capture warnings with the logging infrastructure
-        root_logger = logging.getLogger()
         logging_formatter = utils.ArrowLoggingFormatter("%(asctime)s %(threadName)-10s %(name)-40s %(levelname)-8s: %(message)s")
         logging_handler = logging.StreamHandler(sys.stdout)
         logging_handler.setFormatter(logging_formatter)
