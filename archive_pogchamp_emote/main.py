@@ -20,7 +20,8 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="Tool to automate the archival of the daily twitch.tv PogChamp emotes each day",
-        epilog="Copyright 2021-01-13 - Mark Grandi")
+        epilog="Copyright 2021-01-13 - Mark Grandi"
+        fromfile_prefix_chars="@")
 
 
 
