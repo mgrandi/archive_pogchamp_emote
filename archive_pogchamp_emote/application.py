@@ -52,7 +52,6 @@ class Application:
             for iter_url in constants.WPULL_INPUT_URLS_FORMAT_LIST:
                 url_to_write = iter_url.format(emote_config.twitch_emote_id)
                 f.write(f"{url_to_write}\n")
-                f.write("\n")
 
         logger.info("writing wpull url list was successful")
 
@@ -126,6 +125,7 @@ class Application:
             f.write("--page-requisites\n")
             f.write("--delete-after\n")
             f.write("--warc-append\n")
+            f.write("--verbose\n")
 
         logger.info("writing wpull arguments was successful")
 

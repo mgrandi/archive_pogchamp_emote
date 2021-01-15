@@ -120,6 +120,10 @@ def save_archive_of_webpage_in_wbm(url):
 
         return archive_url
 
+    # if we get here, then we ran out of tries
+    raise Exception("did not get a good result when trying to save the url `%s` in the wayback machine, errors: `%s`",
+        url, error_list)
+
 
 def build_emote_config_from_argparse_args(args):
     ''' builds and returns the DailyPogchampEmoteConfig object
