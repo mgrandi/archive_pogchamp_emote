@@ -4,6 +4,7 @@ import pprint
 import typing
 import subprocess
 import re
+import argparse
 
 import arrow
 import pyhocon
@@ -125,7 +126,7 @@ def save_archive_of_webpage_in_wbm(url):
         # isn't the page that is requested, but instead is a url of the form
         # `https://web.archive.org/web/20210115010042/https://pbs.twimg.com/hashflag/config-2021-01-15-01.json`
         # if we get this, we should throw an exception so we don't accidentally use this wayback machine URL as a real one
-        logger.debug("checking the returned archive url `%s` against the hashflags JSON regex: `%s`", constants.TWITTER_HASHFLAGS_REGEX)
+        logger.debug("checking the returned archive url `%s` against the hashflags JSON regex: `%s`", archive_url, constants.TWITTER_HASHFLAGS_REGEX)
         hashflags_re_result = constants.TWITTER_HASHFLAGS_REGEX.search(archive_url)
         logger.debug("regex result: `%s`", hashflags_re_result)
 
