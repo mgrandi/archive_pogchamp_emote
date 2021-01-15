@@ -3,6 +3,7 @@ import pathlib
 import pprint
 import typing
 import subprocess
+import re
 
 import arrow
 import pyhocon
@@ -94,6 +95,7 @@ def save_archive_of_webpage_in_wbm(url):
     '''
     logger.info("saving an archive of the url `%s` in the wayback machine", url)
     error_list = []
+    archive_url = None
 
     # loop until we get a valid result since it seems to not return a result a lot of
     # the time , probably because it takes too long and is queued?
@@ -117,6 +119,19 @@ def save_archive_of_webpage_in_wbm(url):
             # the url
             logger.debug(f"Got URLError when trying to save url `{url}`")
             raise e
+
+        # check to see its not a garbage 'hashflags' url
+        # for some reason, the wayback machine when given a twitter url has a chance to return a result that
+        # isn't the page that is requested, but instead is a url of the form
+        # `https://web.archive.org/web/20210115010042/https://pbs.twimg.com/hashflag/config-2021-01-15-01.json`
+        # if we get this, we should throw an exception so we don't accidentally use this wayback machine URL as a real one
+        logger.debug("checking the returned archive url `%s` against the hashflags JSON regex: `%s`", constants.TWITTER_HASHFLAGS_REGEX)
+        hashflags_re_result = constants.TWITTER_HASHFLAGS_REGEX.search(archive_url)
+        logger.debug("regex result: `%s`", hashflags_re_result)
+
+        if hashflags_re_result:
+            raise Exception(f"Hashflasgs regex `{constants.TWITTER_HASHFLAGS_REGEX}` matched the returned archive url `{archive_url}` ," +
+                " this means that the archive was corrupted and shouldn't be used, please try again in 30 minutes")
 
         return archive_url
 

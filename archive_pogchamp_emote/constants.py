@@ -3,7 +3,7 @@ ARROW_DATE_FORMAT = "YYYY-MM-DD"
 
 WPULL_DATABASE_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_database.sqlite3"
 WPULL_OUTPUT_FILE_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_output.log"
-WPULL_WARC_FILE_FORMAT = "{}_twitch-tv_pogchamp_emote"
+WPULL_WARC_FILE_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_warc"
 
 WPULL_INPUT_URL_LIST_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_url_list.txt"
 WPULL_ARGS_FILE_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_arguments.txt"
