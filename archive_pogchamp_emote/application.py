@@ -131,6 +131,7 @@ class Application:
             f.write("--page-requisites\n")
             f.write("--delete-after\n")
             f.write("--warc-append\n")
+            f.write("--recursive\n")
             f.write("--verbose\n")
 
         logger.info("writing wpull arguments was successful")
