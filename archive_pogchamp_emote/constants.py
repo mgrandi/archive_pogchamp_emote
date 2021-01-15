@@ -1,3 +1,4 @@
+import re
 
 ARROW_DATE_FORMAT = "YYYY-MM-DD"
 
@@ -38,3 +39,6 @@ WAYBACK_ATTEMPT_MAX = 5
 YOUTUBE_DL_FILE_TEMPLATE_STR = "%(title)s-%(id)s.%(ext)s"
 
 ACCEPTABLE_WPULL_EXIT_CODES = [0, 4, 5, 8]
+
+# https://pbs.twimg.com/hashflag/config-2021-01-15-01.json
+TWITTER_HASHFLAGS_REGEX = re.compile("^.*hashflag/config-.*$")
