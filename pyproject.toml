@@ -6,7 +6,7 @@ authors = ["Mark Grandi <markgrandi@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 pyhocon = "^0.3.57"
 youtube_dl = "^2021.1.8"
 arrow = "^0.17.0"
@@ -14,7 +14,7 @@ logging_tree = "^1.8.1"
 waybackpy = "^2.4.1"
 attrs = "^20.3.0"
 jsonschema = "^3.2.0"
-bfa = {path = "bfa-18.2.0-py2.py3-none-any.whl"}
+bfa = {path = "libs/bfa-18.2.0-py2.py3-none-any.whl"}
 
 [tool.poetry.dev-dependencies]
 wheel = "^0.36.2"

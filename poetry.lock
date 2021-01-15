@@ -41,7 +41,7 @@ docs = ["sphinx"]
 
 [package.source]
 type = "file"
-url = "bfa-18.2.0-py2.py3-none-any.whl"
+url = "libs/bfa-18.2.0-py2.py3-none-any.whl"
 
 [[package]]
 name = "certifi"
@@ -204,8 +204,8 @@ python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9"
-content-hash = "6e1394bd881c843e29c1da788d3291b994eeb41880947c05afd587429c683654"
+python-versions = "^3.8"
+content-hash = "82e6760e95d6d2b93be495db213a1ef9649550cb141e642c5a0025fa7d9a19c8"
 
 [metadata.files]
 arrow = [
