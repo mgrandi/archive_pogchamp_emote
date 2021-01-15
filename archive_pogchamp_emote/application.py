@@ -113,11 +113,9 @@ class Application:
             f.write("--warc-append\n")
 
 
-        # write youtube-dl arguments file (for posterity, we are just using youtube-dl as a library here)
-        ytl_arguments_path = emote_config.root_output_folder / emote_config.ytdl_arguments_file_name
-        logger.info("writing youtube-dl arguments to `%s`", ytl_arguments_path)
 
 
+        # create youtube-dl arguments
         ytdl_logger = logger.getChild("ytdl")
 
         # see https://github.com/ytdl-org/youtube-dl/blob/3e4cedf9e8cd3157df2457df7274d0c842421945/youtube_dl/YoutubeDL.py#L137-L312
@@ -129,16 +127,23 @@ class Application:
             "writeannotations": True,
             "writedescription": True,
             "keepvideo": True,
-            "format": "bestvideo+bestaudio/best", # this should be default but lets explicitly set it just in case
+            "format": "bestvideo+bestaudio/best", # this should be default but lets explicitly set it just in case,
+            "newline": True,
+            "outtmpl": f"{emote_config.youtube_dl_output_folder}/{constants.YOUTUBE_DL_FILE_TEMPLATE_STR}",
             "logger": ytdl_logger,
         }
 
-        with open(ytl_arguments_path, "w", encoding="utf-8") as f:
+        logger.debug("youtube-dl arguments: `%s`", ytdl_arguments_dict)
 
+        # write youtube-dl arguments file (for reference, we are just using youtube-dl as a library here)
+        ytl_arguments_path = emote_config.root_output_folder / emote_config.ytdl_arguments_file_name
+        logger.info("writing youtube-dl arguments to `%s`", ytl_arguments_path)
+
+        with open(ytl_arguments_path, "w", encoding="utf-8") as f:
 
             f.write(pprint.pformat(ytdl_arguments_dict))
 
         # now download the twitter video
-
+        logger.info("Downloading any twitter videos to `%s`", emote_config.youtube_dl_output_folder)
         utils.save_video_with_youtube_dl(ytdl_arguments_dict, emote_config.twitch_twitter_post_url)
 
