@@ -16,6 +16,42 @@ from archive_pogchamp_emote import model as model
 logger = logging.getLogger(__name__)
 
 
+def youtube_dl_progress_hook(logger_to_use):
+    '''
+    returns a downloader hook that logs to a logger we specify
+
+    we have to do this because the default progress uses a carriage return even
+    when using youtube-dl as a library and passing in a 'logger' to the
+    configuration, which messes up the stdout logging and looks weird in
+    file logging
+
+    '''
+
+
+    def _inner_youtube_dl_progress_hook(dl_progress_dictionary):
+        '''
+
+        see https://github.com/ytdl-org/youtube-dl/blob/3e4cedf9e8cd3157df2457df7274d0c842421945/youtube_dl/YoutubeDL.py#L230
+
+        If status is one of "downloading", or "finished", the following properties may also be present:
+            * filename: The final filename (always present)
+            * tmpfilename: The filename we're currently writing to
+            * downloaded_bytes: Bytes on disk
+            * total_bytes: Size of the whole file, None if unknown
+            * total_bytes_estimate: Guess of the eventual file size, None if unavailable.
+            * elapsed: The number of seconds since download started.
+            * eta: The estimated time in seconds, None if unknown
+            * speed: The download speed in bytes/second, None if unknown
+            * fragment_index: The counter of the currently downloaded video fragment.
+            * fragment_count: The number of fragments (= individual files that will be merged)
+
+        '''
+
+        logger_to_use.info("download progress: `%s`", dl_progress_dictionary)
+
+    return _inner_youtube_dl_progress_hook
+
+
 def save_video_with_youtube_dl(ytdl_args_dict, url):
     '''
     download a url with youtube-dl, given the arguments and a url to download

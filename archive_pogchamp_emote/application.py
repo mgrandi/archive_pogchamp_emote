@@ -138,6 +138,11 @@ class Application:
                 "format": "bestvideo+bestaudio/best", # this should be default but lets explicitly set it just in case,
                 "newline": True,
                 "outtmpl": f"{emote_config.youtube_dl_output_folder}/{constants.YOUTUBE_DL_FILE_TEMPLATE_STR}",
+                # set because the progress outputs use carriage returns so it kinda messes up the stdout logging
+                # and looks weird in the file logging. So adding this supresses the default console progress
+                # logging, but doesn't prevent youtube-dl from calling the progress hooks it seems.
+                "noprogress": True,
+                "progress_hooks": [utils.youtube_dl_progress_hook(ytdl_logger)],
                 "logger": ytdl_logger,
             }
 
