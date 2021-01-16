@@ -5,6 +5,7 @@ import typing
 import subprocess
 import re
 import argparse
+import platform
 
 import arrow
 import pyhocon
@@ -19,6 +20,49 @@ from archive_pogchamp_emote import model as model
 
 logger = logging.getLogger(__name__)
 
+
+def get_app_version_info():
+
+    return model.AppVersionInfo(
+        app_version=constants.WARC_HEADER_VALUE_APPLICATION_VERSION,
+        app_link=constants.WARC_HEADER_VALUE_APPLICATION_GITHUB_LINK,
+        git_hash=get_git_hash(),
+        python_version=platform.python_version(),
+        python_revision=platform.python_revision(),
+        python_build=platform.python_build(),
+        python_platform=platform.platform(),
+        python_compiler=platform.python_compiler(),
+        python_branch=platform.python_branch())
+
+def get_git_hash():
+    '''
+    runs git describe on the root folder of the git repository
+
+    note: this is kinda hacky, and relies on this being run inside the git repo
+    '''
+
+    git_repo_path = pathlib.Path(__file__).joinpath("../../.git").resolve()
+    git_describe_args = [
+        "git",
+        "--git-dir",
+        git_repo_path,
+        "describe",
+        "--tags",
+        "--first-parent",
+        "--abbrev=40", # HAS to be on the same line or else you get `fatal: --dirty is incompatible with commit-ishes`
+        "--long",
+        "--always",
+        "--all",
+        "--dirty",
+    ]
+
+    logger.debug("describe args: `%s`", git_describe_args)
+
+    git_describe_result = subprocess.run(git_describe_args, capture_output=True)
+
+    stdout = git_describe_result.stdout.decode("utf-8").strip()
+    logger.debug("git describe result: `%s`", stdout)
+    return stdout
 
 def check_completedprocess_for_acceptable_exit_codes(
     completed_process_obj:subprocess.CompletedProcess,
@@ -175,6 +219,7 @@ def build_emote_config_from_argparse_args(args):
     builder = builder.warc_output_folder(root_folder_with_date / "warc")
     builder = builder.youtube_dl_output_folder(root_folder_with_date / "twitter_video")
     builder = builder.warc_tempdir_folder(root_folder_with_date / "warc")
+    builder = builder.application_version_info_name(constants.APPLICATION_VERSION_FILE_FORMAT.format(date_str))
     builder = builder.warc_database_name(constants.WPULL_DATABASE_FORMAT.format(date_str))
     builder = builder.warc_output_file_name(constants.WPULL_OUTPUT_FILE_FORMAT.format(date_str))
     builder = builder.warc_arguments_file_name(constants.WPULL_ARGS_FILE_FORMAT.format(date_str))

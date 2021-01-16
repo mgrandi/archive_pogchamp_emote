@@ -4,6 +4,17 @@ import typing
 import attr
 import arrow
 
+@attr.s(auto_attribs=True, frozen=True, kw_only=True)
+class AppVersionInfo:
+    app_version:str = attr.ib()
+    app_link:str = attr.ib()
+    git_hash:str = attr.ib()
+    python_version:str = attr.ib()
+    python_revision:str = attr.ib()
+    python_build:typing.Sequence[str] = attr.ib()
+    python_platform:str = attr.ib()
+    python_compiler:str = attr.ib()
+    python_branch:str = attr.ib()
 
 @attr.s(auto_attribs=True, frozen=True, kw_only=True)
 class WarcHeader:
@@ -23,6 +34,7 @@ class DailyPogchampEmoteConfig:
     warc_tempdir_folder:pathlib.Path = attr.ib()
 
     # names of files
+    application_version_info_name:str = attr.ib()
     warc_database_name:str = attr.ib()
     warc_output_file_name:str = attr.ib()
     warc_arguments_file_name:str = attr.ib()

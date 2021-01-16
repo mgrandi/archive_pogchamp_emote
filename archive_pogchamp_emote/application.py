@@ -2,6 +2,9 @@ import logging
 import pprint
 import subprocess
 import sys
+import json
+
+import attr
 
 from archive_pogchamp_emote import model as model
 from archive_pogchamp_emote import utils as utils
@@ -25,6 +28,8 @@ class Application:
 
     def run(self):
 
+        logger.info("starting, version `%s`, git hash `%s`", constants.WARC_HEADER_VALUE_APPLICATION_VERSION, utils.get_git_hash())
+
         emote_config = utils.build_emote_config_from_argparse_args(self.args)
 
         wpull_pex_path = self.args.wpull_pex_path
@@ -44,6 +49,19 @@ class Application:
                 logger.info("folder `%s` already exists, don't need to recreate it", iter_folder_path)
 
         wpull_url_list_path = emote_config.root_output_folder / emote_config.warc_input_url_list_file_name
+
+        # write version info file
+        ver_info_path = emote_config.root_output_folder / emote_config.application_version_info_name
+        logger.info("writing app version info file to `%s`", ver_info_path)
+
+        with open(ver_info_path, "w", encoding="utf-8") as f:
+
+            appversion = utils.get_app_version_info()
+            appversion_dict = attr.asdict(appversion)
+            json_to_write = json.dumps(appversion_dict, indent=4)
+            f.write(json_to_write)
+
+        logger.info("writing of app version info file was successful")
 
         # write wpull url list
         logger.info("writing wpull url list to `%s`", wpull_url_list_path)
@@ -118,6 +136,21 @@ class Application:
 
                 f.write("--warc-header\n")
                 f.write(f"{iter_header.key}:{iter_header.value}\n")
+
+            #########################################################
+            # warc headers for this application
+            #########################################################
+            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_NAME}:{constants.WARC_HEADER_VALUE_APPLICATION_NAME}\n")
+
+            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_VERSION}:{constants.WARC_HEADER_VALUE_APPLICATION_VERSION}\n")
+
+            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_GITHUB_LINK}:{constants.WARC_HEADER_VALUE_APPLICATION_GITHUB_LINK}\n")
+
+            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_GIT_HASH}:{utils.get_git_hash()}\n")
 
             #########################################################
             # rest of the wpull arguments
