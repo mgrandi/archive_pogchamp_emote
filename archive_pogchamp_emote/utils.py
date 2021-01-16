@@ -132,12 +132,20 @@ def save_video_with_youtube_dl(ytdl_args_dict, url):
         ydl.download([url])
 
 
-def save_archive_of_webpage_in_wbm(url):
+def save_archive_of_webpage_in_wbm(url, dry_run):
     '''
     saves a copy of the given URL in the Internet Archive wayback machine
     and returns the archive URL
 
+    @param url - the url as a string
+    @param dry_run - whether we should actually save it, or just log what we would do
+
     '''
+
+    if dry_run:
+        logger.info("DRY RUN: would have saved the url `%s` in the wayback machine", url)
+        return
+
     logger.info("saving an archive of the url `%s` in the wayback machine", url)
     error_list = []
     archive_url = None

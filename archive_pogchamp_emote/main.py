@@ -45,6 +45,9 @@ def main():
         dest="log_to_file",
         type=utils.isFileType(False),
         help="save the application log to a file as well as print to stdout")
+    parser.add_argument("--testing",
+        action="store_true",
+        help="pass this in to set some settings for testing, such as don't save pages with the WBM")
     parser.add_argument("--verbose", action="store_true", help="Increase logging verbosity")
 
 

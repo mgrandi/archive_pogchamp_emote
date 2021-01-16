@@ -30,6 +30,11 @@ class Application:
 
         logger.info("starting, version `%s`, git hash `%s`", constants.WARC_HEADER_VALUE_APPLICATION_VERSION, utils.get_git_hash())
 
+        if self.args.testing:
+            logger.info("######################")
+            logger.info("#    TESTING MODE    #")
+            logger.info("######################")
+
         emote_config = utils.build_emote_config_from_argparse_args(self.args)
 
         wpull_pex_path = self.args.wpull_pex_path
@@ -116,7 +121,7 @@ class Application:
             logger.info("saving streamer social media pages via the Wayback Machine")
             for idx, iter_social_media_url in enumerate(emote_config.streamer_social_media_urls):
 
-                streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url)
+                streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url, self.args.testing)
 
                 f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{constants.WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT.format(idx)}:{iter_social_media_url}\n")
@@ -126,7 +131,7 @@ class Application:
 
             # link to the twitter.com post by the Twitch user account announcing the emote of the day
             logger.info("saving the announcement twitter.com/twitch post via the Wayback Machine")
-            twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url)
+            twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url, self.args.testing)
 
             f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_STREAMER_TWICH_TWEET_URL}:{emote_config.twitch_twitter_post_url}\n")
@@ -138,7 +143,7 @@ class Application:
             # any other links the configuration file says to include as headers (plus the WBM backup)
             for idx, iter_additional_url in enumerate(emote_config.additional_urls_to_save_via_wbm):
 
-                iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(iter_additional_url)
+                iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(iter_additional_url, self.args.testing)
 
                 f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{constants.WARC_HEADER_ADDITIONAL_URL_FORMAT.format(idx)}:{iter_additional_url}\n")
