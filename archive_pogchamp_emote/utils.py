@@ -246,17 +246,20 @@ def build_emote_config_from_argparse_args(args):
     builder = builder.streamer_twitch_url(root_config_section[constants.CONFIG_PATH_STREAMER_TWITCH_URL])
     builder = builder.streamer_name(root_config_section[constants.CONFIG_PATH_STREAMER_NAME])
 
-    warc_header_dict = root_config_section[constants.CONFIG_PATH_WARC_HEADERS]
+    extra_warc_header_dict = root_config_section[constants.CONFIG_PATH_EXTRA_WARC_HEADERS]
 
-    warc_header_list = []
-    for key,value in warc_header_dict.items():
-        warc_header_list.append(model.WarcHeader(key=key, value=value))
+    extra_warc_header_list = []
+    for key,value in extra_warc_header_dict.items():
+        extra_warc_header_list.append(model.WarcHeader(key=key, value=value))
 
-    builder = builder.warc_headers(warc_header_list)
+    builder = builder.extra_warc_headers(extra_warc_header_list)
 
-    additional_urls = root_config_section[constants.CONFIG_PATH_ADDITIONAL_URLS]
+    additional_urls_save_warc = root_config_section[constants.CONFIG_PATH_ADDITIONAL_URLS_SAVE_WARC]
+    builder = builder.additional_urls_to_include_in_warc(additional_urls_save_warc)
 
-    builder = builder.additional_urls(additional_urls)
+    additional_urls_save_wbm = root_config_section[constants.CONFIG_PATH_ADDITIONAL_URLS_SAVE_WBM]
+    builder = builder.additional_urls_to_save_via_wbm(additional_urls_save_wbm)
+
 
     logger.debug("building DailyPogchampEmoteConfig object")
 

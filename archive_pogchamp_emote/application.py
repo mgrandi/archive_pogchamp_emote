@@ -74,7 +74,9 @@ class Application:
                 f.write(f"{url_to_write}\n")
 
             # write any additional urls the user may have provided in the configuration
-            for iter_url in emote_config.additional_urls:
+            logger.info("including `%s` additional urls to save in the WARC",
+                len(emote_config.additional_urls_to_include_in_warc))
+            for iter_url in emote_config.additional_urls_to_include_in_warc:
                 f.write(f"{iter_url}\n")
 
         logger.info("writing wpull url list was successful")
@@ -85,88 +87,108 @@ class Application:
 
         with open(wpull_arguments_path, "w", encoding="utf-8") as f:
 
-            f.write("--database\n")
+            f.write(f"{constants.WPULL_ARGUMENT_DATABASE}\n")
             f.write(f"{emote_config.warc_output_folder / emote_config.warc_database_name}\n")
-            f.write("--output-file\n")
+            f.write(f"{constants.WPULL_ARGUMENT_OUTPUT_FILE}\n")
             f.write(f"{emote_config.warc_output_folder / emote_config.warc_output_file_name}\n")
-            f.write("--input-file\n")
+            f.write(f"{constants.WPULL_ARGUMENT_INPUT_FILE_URL_LIST}\n")
             f.write(f"{emote_config.root_output_folder / emote_config.warc_input_url_list_file_name}\n")
-            f.write("--warc-file\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_FILE}\n")
             f.write(f"{emote_config.warc_output_folder / emote_config.warc_file_name}\n")
-            f.write("--warc-tempdir\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_TEMPDIR}\n")
             f.write(f"{emote_config.warc_tempdir_folder}\n")
 
             #########################################################################
             # WARC headers that always get included
             ##########################################################################
-            f.write("--warc-header\n")
-            f.write(f"description:twitch.tv PogChamp emote for {emote_config.emote_date.format(constants.ARROW_DATE_FORMAT)}\n")
-            f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-streamer-name:{emote_config.streamer_name}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+            f.write(f"{constants.WARC_HEADER_DESCRIPTION}:Daily https://twitch.tv PogChamp emote for {emote_config.emote_date.format(constants.ARROW_DATE_FORMAT)}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+            f.write(f"{constants.WARC_HEADER_STREAMER_NAME}:{emote_config.streamer_name}\n")
 
             # link to the streamer's twitch page
-            f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-streamer-twitch-link:{emote_config.streamer_twitch_url}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+            f.write(f"{constants.WARC_HEADER_STREAMER_TWITCH_LINK}:{emote_config.streamer_twitch_url}\n")
             # f.write("--warc-header\n")
             # f.write(f"twitch-tv-pogchamp-streamer-twitch-link-wbm:{test}\n")
 
-            # link to the streamer's social media page
+            # link to the streamer's social media page + WBM save
+            logger.info("saving streamer social media pages via the Wayback Machine")
             for idx, iter_social_media_url in enumerate(emote_config.streamer_social_media_urls):
+
                 streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url)
-                f.write("--warc-header\n")
-                f.write(f"twitch-tv-pogchamp-streamer-social-media-link-id-{idx:03d}:{iter_social_media_url}\n")
-                f.write("--warc-header\n")
-                f.write(f"twitch-tv-pogchamp-streamer-social-media-link-wbm-id-{idx:03d}:{streamer_social_media_link_archive}\n")
+
+                f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+                f.write(f"{constants.WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT.format(idx)}:{iter_social_media_url}\n")
+
+                f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+                f.write(f"{constants.WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_WBM_FORMAT.format(idx)}:{streamer_social_media_link_archive}\n")
 
             # link to the twitter.com post by the Twitch user account announcing the emote of the day
+            logger.info("saving the announcement twitter.com/twitch post via the Wayback Machine")
             twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url)
-            f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-twitch-tweet-link:{emote_config.twitch_twitter_post_url}\n")
-            f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-twitch-tweet-link-wbm:{twitch_twitter_post_url_archive}\n")
 
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+            f.write(f"{constants.WARC_HEADER_STREAMER_TWICH_TWEET_URL}:{emote_config.twitch_twitter_post_url}\n")
 
-            f.write("--warc-header\n")
-            f.write(f"date:{emote_config.emote_date.format(constants.ARROW_DATE_FORMAT)}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+            f.write(f"{constants.WARC_HEADER_STREAMER_TWICH_TWEET_URL_WBM}:{twitch_twitter_post_url_archive}\n")
+
+            logger.info("saving any additional urls via the Wayback Machine")
+            # any other links the configuration file says to include as headers (plus the WBM backup)
+            for idx, iter_additional_url in enumerate(emote_config.additional_urls_to_save_via_wbm):
+
+                iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(iter_additional_url)
+
+                f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+                f.write(f"{constants.WARC_HEADER_ADDITIONAL_URL_FORMAT.format(idx)}:{iter_additional_url}\n")
+
+                f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+                f.write(f"{constants.WARC_HEADER_ADDITIONAL_URL_WBM_FORMAT.format(idx)}:{iter_additional_url_archive}\n")
+
+            # date
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+            f.write(f"{constants.WARC_HEADER_DATE}:{emote_config.emote_date.format(constants.ARROW_DATE_FORMAT)}\n")
+
 
             ##############################################################################
             # custom warc headers, provided by the configuration file
             ##############################################################################
-            for iter_header in emote_config.warc_headers:
+            for iter_header in emote_config.extra_warc_headers:
 
-                f.write("--warc-header\n")
+                f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{iter_header.key}:{iter_header.value}\n")
 
             #########################################################
             # warc headers for this application
             #########################################################
-            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_NAME}:{constants.WARC_HEADER_VALUE_APPLICATION_NAME}\n")
 
-            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_VERSION}:{constants.WARC_HEADER_VALUE_APPLICATION_VERSION}\n")
 
-            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_GITHUB_LINK}:{constants.WARC_HEADER_VALUE_APPLICATION_GITHUB_LINK}\n")
 
-            f.write(f"{constants.WARC_HEADER_WPULL_ARGUMENT}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_KEY_APPLICATION_GIT_HASH}:{utils.get_git_hash()}\n")
 
             #########################################################
             # rest of the wpull arguments
             ########################################################
-            f.write("--waitretry\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WAITRETRY}\n")
             f.write("30\n")
-            f.write("--no-robots\n")
-            f.write("--warc-max-size\n")
+            f.write(f"{constants.WPULL_ARGUMENT_NO_ROBOTS}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_MAX_SIZE}\n")
             f.write("5368709000\n")
-            f.write("--html-parser\n")
+            f.write(f"{constants.WPULL_ARGUMENT_HTML_PARSER}\n")
             f.write("libxml2-lxml\n")
-            f.write("--page-requisites\n")
-            f.write("--delete-after\n")
-            f.write("--warc-append\n")
-            f.write("--recursive\n")
-            f.write("--verbose\n")
+            f.write(f"{constants.WPULL_ARGUMENT_PAGE_REQUISITES}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_DELETE_AFTER}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_WARC_APPEND}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_RECURSIVE}\n")
+            f.write(f"{constants.WPULL_ARGUMENT_VERBOSE}\n")
 
         logger.info("writing wpull arguments was successful")
 

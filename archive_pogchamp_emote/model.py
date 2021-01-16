@@ -50,6 +50,7 @@ class DailyPogchampEmoteConfig:
     streamer_twitch_url:str = attr.ib()
     streamer_name:str = attr.ib()
 
-    warc_headers:typing.Sequence[WarcHeader] = attr.ib()
-    additional_urls:typing.Sequence[str] = attr.ib()
+    extra_warc_headers:typing.Sequence[WarcHeader] = attr.ib()
+    additional_urls_to_include_in_warc:typing.Sequence[str] = attr.ib()
+    additional_urls_to_save_via_wbm:typing.Sequence[str] = attr.ib()
 

@@ -25,8 +25,10 @@ CONFIG_PATH_STREAMER_SOCIAL_MEDIA_URLS = "streamer_social_media_urls"
 CONFIG_PATH_STREAMER_TWITCH_URL = "streamer_twitch_url"
 CONFIG_PATH_STREAMER_NAME = "streamer_name"
 CONFIG_PATH_DATE = "date"
-CONFIG_PATH_WARC_HEADERS = "warc_headers"
-CONFIG_PATH_ADDITIONAL_URLS = "additional_urls"
+CONFIG_PATH_EXTRA_WARC_HEADERS = "extra_warc_headers"
+CONFIG_PATH_ADDITIONAL_URLS_SAVE_WARC = "additional_urls_to_include_in_warc"
+CONFIG_PATH_ADDITIONAL_URLS_SAVE_WBM = "additional_urls_to_save_via_wbm"
+
 
 WPULL_INPUT_URLS_FORMAT_LIST = [
     "https://static-cdn.jtvnw.net/emoticons/v2/{}/default/dark/1.0",
@@ -49,7 +51,21 @@ ACCEPTABLE_WPULL_EXIT_CODES = [0, 4, 5, 8]
 TWITTER_HASHFLAGS_REGEX = re.compile("^.*hashflag/config-.*$")
 
 
-WARC_HEADER_WPULL_ARGUMENT = "--warc-header"
+WPULL_ARGUMENT_WARC_HEADER = "--warc-header"
+WPULL_ARGUMENT_DATABASE = "--database"
+WPULL_ARGUMENT_OUTPUT_FILE = "--output-file"
+WPULL_ARGUMENT_INPUT_FILE_URL_LIST = "--input-file"
+WPULL_ARGUMENT_WARC_FILE = "--warc-file"
+WPULL_ARGUMENT_WARC_TEMPDIR = "--warc-tempdir"
+WPULL_ARGUMENT_WAITRETRY = "--waitretry"
+WPULL_ARGUMENT_NO_ROBOTS = "--no-robots"
+WPULL_ARGUMENT_WARC_MAX_SIZE = "--warc-max-size"
+WPULL_ARGUMENT_HTML_PARSER = "--html-parser"
+WPULL_ARGUMENT_PAGE_REQUISITES = "--page-requisites"
+WPULL_ARGUMENT_DELETE_AFTER = "--delete-after"
+WPULL_ARGUMENT_WARC_APPEND = "--warc-append"
+WPULL_ARGUMENT_RECURSIVE = "--recursive"
+WPULL_ARGUMENT_VERBOSE = "--verbose"
 
 WARC_HEADER_KEY_APPLICATION_NAME = "application-name"
 WARC_HEADER_VALUE_APPLICATION_NAME = "archive_pogchamp_emote"
@@ -61,3 +77,20 @@ WARC_HEADER_KEY_APPLICATION_GITHUB_LINK = "application-github-link"
 WARC_HEADER_VALUE_APPLICATION_GITHUB_LINK= "https://github.com/mgrandi/archive_pogchamp_emote"
 
 WARC_HEADER_KEY_APPLICATION_GIT_HASH = "application-git-hash"
+
+WARC_HEADER_STREAMER_TWITCH_LINK = "twitch-daily-pogchamp-emote-streamer-twitch-link"
+WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT = "twitch-daily-pogchamp-emote-streamer-social-media-link-{:03d}"
+WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_WBM_FORMAT = "twitch-daily-pogchamp-emote-streamer-social-media-link-wbm-{:03d}"
+
+WARC_HEADER_STREAMER_TWICH_TWEET_URL = "twitch-daily-pogchamp-emote-twitch-tweet-link"
+WARC_HEADER_STREAMER_TWICH_TWEET_URL_WBM = "twitch-daily-pogchamp-emote-twitch-tweet-link-wbm"
+
+WARC_HEADER_ADDITIONAL_URL_FORMAT = "twitch-daily-pogchamp-emote-additional-url-{:03d}"
+WARC_HEADER_ADDITIONAL_URL_WBM_FORMAT = "twitch-daily-pogchamp-emote-additional-url-wbm-{:03d}"
+
+WARC_HEADER_STREAMER_NAME = "twitch-daily-pogchamp-emote-twitch-tv-pogchamp-streamer-name"
+
+
+WARC_HEADER_DATE = "date"
+WARC_HEADER_DESCRIPTION = "description"
+
