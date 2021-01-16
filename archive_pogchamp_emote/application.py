@@ -45,6 +45,9 @@ class Application:
             emote_config.warc_output_folder
         ]
 
+        #########################################################################
+        # creating folders
+        #########################################################################
         for iter_folder_path in folders_to_create_if_they_dont_exist:
             if not iter_folder_path.exists():
                 logger.info("creating folder `%s` because it doesn't exist yet", iter_folder_path)
@@ -55,7 +58,9 @@ class Application:
 
         wpull_url_list_path = emote_config.root_output_folder / emote_config.warc_input_url_list_file_name
 
+        #########################################################################
         # write version info file
+        #########################################################################
         ver_info_path = emote_config.root_output_folder / emote_config.application_version_info_name
         logger.info("writing app version info file to `%s`", ver_info_path)
 
@@ -68,7 +73,9 @@ class Application:
 
         logger.info("writing of app version info file was successful")
 
+        #########################################################################
         # write wpull url list
+        #########################################################################
         logger.info("writing wpull url list to `%s`", wpull_url_list_path)
 
         with open(wpull_url_list_path, "w", encoding="utf-8") as f:
@@ -86,7 +93,9 @@ class Application:
 
         logger.info("writing wpull url list was successful")
 
+        #########################################################################
         # write wpull arguments file
+        #########################################################################
         wpull_arguments_path = emote_config.root_output_folder / emote_config.warc_arguments_file_name
         logger.info("writing wpull arguments to `%s`", wpull_arguments_path)
 
@@ -114,11 +123,13 @@ class Application:
             # link to the streamer's twitch page
             f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_STREAMER_TWITCH_LINK}:{emote_config.streamer_twitch_url}\n")
-            # f.write("--warc-header\n")
-            # f.write(f"twitch-tv-pogchamp-streamer-twitch-link-wbm:{test}\n")
 
+
+            #########################################################################
             # link to the streamer's social media page + WBM save
-            logger.info("saving streamer social media pages via the Wayback Machine")
+            #########################################################################
+            logger.info("saving `%s` streamer social media pages via the Wayback Machine",
+                len(emote_config.streamer_social_media_urls))
             for idx, iter_social_media_url in enumerate(emote_config.streamer_social_media_urls):
 
                 streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url, self.args.testing)
@@ -139,8 +150,12 @@ class Application:
             f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_STREAMER_TWICH_TWEET_URL_WBM}:{twitch_twitter_post_url_archive}\n")
 
-            logger.info("saving any additional urls via the Wayback Machine")
+            #########################################################################
             # any other links the configuration file says to include as headers (plus the WBM backup)
+            #########################################################################
+            logger.info("saving `%s` additional urls via the Wayback Machine",
+                len(emote_config.additional_urls_to_save_via_wbm))
+
             for idx, iter_additional_url in enumerate(emote_config.additional_urls_to_save_via_wbm):
 
                 iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(iter_additional_url, self.args.testing)
@@ -197,6 +212,9 @@ class Application:
 
         logger.info("writing wpull arguments was successful")
 
+        #########################################################################
+        # save twitter.com/twitch twitter post with youtube-dl
+        #########################################################################
         if emote_config.twitch_twitter_post_is_video:
             # create youtube-dl arguments
             ytdl_logger = logger.getChild("ytdl")
@@ -253,7 +271,10 @@ class Application:
             logger.info("writing no_video.txt was successful")
 
 
-        # now call wpull
+        #########################################################################
+        # call wpull
+        #########################################################################
+
         wpull_argument_list = [
             sys.executable,
             wpull_pex_path,

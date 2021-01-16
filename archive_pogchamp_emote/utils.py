@@ -245,8 +245,8 @@ def build_emote_config_from_argparse_args(args):
 
     # stuff that we read from the configuration file
 
-
-    builder = builder.twitch_emote_id(root_config_section[constants.CONFIG_PATH_TWITCH_EMOTE_ID])
+    twitch_emote_id = root_config_section[constants.CONFIG_PATH_TWITCH_EMOTE_ID]
+    builder = builder.twitch_emote_id(twitch_emote_id)
     builder = builder.twitch_twitter_post_url(root_config_section[constants.CONFIG_PATH_TWITCH_TWITTER_POST_URL])
     builder = builder.twitch_twitter_post_is_video(root_config_section[constants.CONFIG_PATH_TWITCH_TWTITER_POST_IS_VIDEO])
 
@@ -269,10 +269,18 @@ def build_emote_config_from_argparse_args(args):
 
     builder = builder.extra_warc_headers(extra_warc_header_list)
 
+    # additional urls to include in the warc
     additional_urls_save_warc = root_config_section[constants.CONFIG_PATH_ADDITIONAL_URLS_SAVE_WARC]
     builder = builder.additional_urls_to_include_in_warc(additional_urls_save_warc)
 
+    # additional urls to include in the wayback machine save
     additional_urls_save_wbm = root_config_section[constants.CONFIG_PATH_ADDITIONAL_URLS_SAVE_WBM]
+    # lets add the extra urls we are going to save in the WARC in this list as well
+    additional_urls_save_wbm.extend(additional_urls_save_warc)
+    # as well as the emotes we are saving cause why not
+    for iter_url in constants.WPULL_INPUT_URLS_FORMAT_LIST:
+        additional_urls_save_wbm.append(iter_url.format(twitch_emote_id))
+
     builder = builder.additional_urls_to_save_via_wbm(additional_urls_save_wbm)
 
 
