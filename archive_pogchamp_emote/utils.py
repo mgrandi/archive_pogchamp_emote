@@ -42,6 +42,14 @@ def get_git_hash():
     '''
 
     git_repo_path = pathlib.Path(__file__).joinpath("../../.git").resolve()
+
+    # these arguments make it so that it will show the full commit hash + if it is dirty or not
+    # even if there are no tags
+    # if there is a tag, it will include it along with how many commits it is above that tag
+    # examples:
+    # `v0.1.0-5-g28074bff058fe6cdb73297cab09e2fd14ca3a9ca-dirty`
+    # (after we remove that tag)
+    # `28074bff058fe6cdb73297cab09e2fd14ca3a9ca-dirty`
     git_describe_args = [
         "git",
         "--git-dir",
@@ -52,7 +60,6 @@ def get_git_hash():
         "--abbrev=40", # HAS to be on the same line or else you get `fatal: --dirty is incompatible with commit-ishes`
         "--long",
         "--always",
-        "--all",
         "--dirty",
     ]
 
