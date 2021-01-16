@@ -93,11 +93,12 @@ class Application:
             # f.write(f"twitch-tv-pogchamp-streamer-twitch-link-wbm:{test}\n")
 
             # link to the streamer's social media page
-            streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(emote_config.streamer_social_media_url)
-            f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-streamer-social-media-link:{emote_config.streamer_social_media_url}\n")
-            f.write("--warc-header\n")
-            f.write(f"twitch-tv-pogchamp-streamer-social-media-link-wbm:{streamer_social_media_link_archive}\n")
+            for idx, iter_social_media_url in enumerate(emote_config.streamer_social_media_urls):
+                streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url)
+                f.write("--warc-header\n")
+                f.write(f"twitch-tv-pogchamp-streamer-social-media-link-id-{idx:03d}:{iter_social_media_url}\n")
+                f.write("--warc-header\n")
+                f.write(f"twitch-tv-pogchamp-streamer-social-media-link-wbm-id-{idx:03d}:{streamer_social_media_link_archive}\n")
 
             # link to the twitter.com post by the Twitch user account announcing the emote of the day
             twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url)

@@ -34,7 +34,7 @@ class DailyPogchampEmoteConfig:
     twitch_emote_id:int = attr.ib()
     twitch_twitter_post_url:str = attr.ib()
     twitch_twitter_post_is_video:bool = attr.ib()
-    streamer_social_media_url:str = attr.ib()
+    streamer_social_media_urls:typing.Sequence[str] = attr.ib()
     streamer_twitch_url:str = attr.ib()
     streamer_name:str = attr.ib()
 

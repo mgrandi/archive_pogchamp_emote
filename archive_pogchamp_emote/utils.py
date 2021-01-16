@@ -189,7 +189,15 @@ def build_emote_config_from_argparse_args(args):
     builder = builder.twitch_emote_id(root_config_section[constants.CONFIG_PATH_TWITCH_EMOTE_ID])
     builder = builder.twitch_twitter_post_url(root_config_section[constants.CONFIG_PATH_TWITCH_TWITTER_POST_URL])
     builder = builder.twitch_twitter_post_is_video(root_config_section[constants.CONFIG_PATH_TWITCH_TWTITER_POST_IS_VIDEO])
-    builder = builder.streamer_social_media_url(root_config_section[constants.CONFIG_PATH_STREAMER_SOCIAL_MEDIA_URL])
+
+    # handle backwards compat
+    if constants.CONFIG_PATH_STREAMER_SOCIAL_MEDIA_URLS in root_config_section:
+        builder = builder.streamer_social_media_urls(root_config_section[constants.CONFIG_PATH_STREAMER_SOCIAL_MEDIA_URLS])
+    else:
+        # set it as a list with 1 item if they are still using the singular version
+        builder = builder.streamer_social_media_urls([root_config_section[constants.CONFIG_PATH_STREAMER_SOCIAL_MEDIA_URL]])
+        logger.warning("deprecated, use `streamer_social_media_urls = []` instead of " +
+            "`streamer_social_media_url = \"\" in your config file")
     builder = builder.streamer_twitch_url(root_config_section[constants.CONFIG_PATH_STREAMER_TWITCH_URL])
     builder = builder.streamer_name(root_config_section[constants.CONFIG_PATH_STREAMER_NAME])
 
