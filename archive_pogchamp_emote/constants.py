@@ -42,7 +42,7 @@ WPULL_INPUT_URLS_FORMAT_LIST = [
 
 HTTP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0"
 
-WAYBACK_ATTEMPT_MAX = 5
+WAYBACK_ATTEMPT_MAX = 6
 
 YOUTUBE_DL_FILE_TEMPLATE_STR = "%(title)s-%(id)s.%(ext)s"
 
@@ -50,6 +50,8 @@ ACCEPTABLE_WPULL_EXIT_CODES = [0, 4, 5, 8]
 
 # https://pbs.twimg.com/hashflag/config-2021-01-15-01.json
 TWITTER_HASHFLAGS_REGEX = re.compile("^.*hashflag/config-.*$")
+
+WAYBACK_MACHINE_BACKOFF_TIME_SECONDS = 5 * 60
 
 
 WPULL_ARGUMENT_WARC_HEADER = "--warc-header"
