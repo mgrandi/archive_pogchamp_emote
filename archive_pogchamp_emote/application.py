@@ -135,7 +135,9 @@ class Application:
                 f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{constants.WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_WBM_FORMAT.format(idx)}:{streamer_social_media_link_archive}\n")
 
+            #########################################################################
             # link to the twitter.com post by the Twitch user account announcing the emote of the day
+            #########################################################################
             logger.info("saving the announcement twitter.com/twitch post via the Wayback Machine")
             twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url, self.args.no_wbm_save)
 
