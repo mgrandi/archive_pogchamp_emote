@@ -67,30 +67,41 @@ WPULL_ARGUMENT_WARC_APPEND = "--warc-append"
 WPULL_ARGUMENT_RECURSIVE = "--recursive"
 WPULL_ARGUMENT_VERBOSE = "--verbose"
 
-WARC_HEADER_KEY_APPLICATION_NAME = "application-name"
-WARC_HEADER_VALUE_APPLICATION_NAME = "archive_pogchamp_emote"
-
-WARC_HEADER_KEY_APPLICATION_VERSION = "application-version"
-WARC_HEADER_VALUE_APPLICATION_VERSION = f"{__version__}"
-
-WARC_HEADER_KEY_APPLICATION_GITHUB_LINK = "application-github-link"
-WARC_HEADER_VALUE_APPLICATION_GITHUB_LINK= "https://github.com/mgrandi/archive_pogchamp_emote"
-
-WARC_HEADER_KEY_APPLICATION_GIT_HASH = "application-git-hash"
-
-WARC_HEADER_STREAMER_TWITCH_LINK = "twitch-daily-pogchamp-emote-streamer-twitch-link"
-WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT = "twitch-daily-pogchamp-emote-streamer-social-media-link-{:03d}"
-WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_WBM_FORMAT = "twitch-daily-pogchamp-emote-streamer-social-media-link-wbm-{:03d}"
-
-WARC_HEADER_STREAMER_TWICH_TWEET_URL = "twitch-daily-pogchamp-emote-twitch-tweet-link"
-WARC_HEADER_STREAMER_TWICH_TWEET_URL_WBM = "twitch-daily-pogchamp-emote-twitch-tweet-link-wbm"
-
-WARC_HEADER_ADDITIONAL_URL_FORMAT = "twitch-daily-pogchamp-emote-additional-url-{:03d}"
-WARC_HEADER_ADDITIONAL_URL_WBM_FORMAT = "twitch-daily-pogchamp-emote-additional-url-wbm-{:03d}"
-
-WARC_HEADER_STREAMER_NAME = "twitch-daily-pogchamp-emote-twitch-tv-pogchamp-streamer-name"
-
+################
+# WARC headers
+################
 
 WARC_HEADER_DATE = "date"
 WARC_HEADER_DESCRIPTION = "description"
+
+# Custom headers
+
+# use .format() here becaues we need to put some format string markers in the string to put in numeric instances later
+WARC_CUSTOM_HEADER_PREFIX = "X-twitch-daily-pogchamp-emote-"
+
+WARC_HEADER_KEY_APPLICATION_NAME = "{}application-name".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_VALUE_APPLICATION_NAME = "archive_pogchamp_emote".formt(WARC_CUSTOM_HEADER_PREFIX)
+
+WARC_HEADER_KEY_APPLICATION_VERSION = "{}application-version".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_VALUE_APPLICATION_VERSION = f"{__version__}"
+
+WARC_HEADER_KEY_APPLICATION_GITHUB_LINK = "{}application-github-link".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_VALUE_APPLICATION_GITHUB_LINK= "https://github.com/mgrandi/archive_pogchamp_emote"
+
+WARC_HEADER_KEY_APPLICATION_GIT_HASH = "{}application-git-hash".formt(WARC_CUSTOM_HEADER_PREFIX)
+
+WARC_HEADER_STREAMER_TWITCH_LINK = "{}streamer-twitch-link".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT = "{}streamer-social-media-link-".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
+WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_WBM_FORMAT = "{}social-media-link-wbm-{}".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
+
+WARC_HEADER_STREAMER_TWICH_TWEET_URL = "{}twitch-tweet-link".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_STREAMER_TWICH_TWEET_URL_WBM = "{}twitch-tweet-link-wbm".formt(WARC_CUSTOM_HEADER_PREFIX)
+
+WARC_HEADER_ADDITIONAL_URL_FORMAT = "{}additional-url-{}".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
+WARC_HEADER_ADDITIONAL_URL_WBM_FORMAT = "{}additional-url-wbm-{}".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
+
+WARC_HEADER_STREAMER_NAME = "{}twitch-tv-pogchamp-streamer-name".formt(WARC_CUSTOM_HEADER_PREFIX)
+
+
+
 
