@@ -262,7 +262,7 @@ def save_archive_of_webpage_in_wbm(url, dry_run=False):
 
         if hashflags_re_result:
             logger.error("Hashflasgs regex `%s matched the returned archive url `%s` ," +
-                " this means that the archive was corrupted and shouldn't be used, sleeping for 30 minutes".
+                " this means that the archive was corrupted and shouldn't be used, sleeping for 30 minutes",
                 constants.TWITTER_HASHFLAGS_REGEX, archive_url)
             archive_url = None
             time.sleep(30 * 60)
