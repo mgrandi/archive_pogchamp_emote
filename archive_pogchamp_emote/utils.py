@@ -8,6 +8,7 @@ import argparse
 import platform
 import urllib
 import hashlib
+import time
 
 import arrow
 import pyhocon
@@ -240,6 +241,9 @@ def save_archive_of_webpage_in_wbm(url, dry_run=False):
         except WaybackError as e:
             logger.debug(f"Got WaybackError when trying to save url `{url}`: `{e}`")
             error_list.append(e)
+
+            logger.info("Got WaybackError, sleeping for `%s` seconds before trying again", constants.WAYBACK_MACHINE_BACKOFF_TIME_SECONDS)
+            time.sleep(constants.WAYBACK_MACHINE_BACKOFF_TIME_SECONDS)
             continue
         except URLError as e:
             # don't continue here, this means we screwed up when providing
@@ -257,14 +261,21 @@ def save_archive_of_webpage_in_wbm(url, dry_run=False):
         logger.debug("regex result: `%s`", hashflags_re_result)
 
         if hashflags_re_result:
-            raise Exception(f"Hashflasgs regex `{constants.TWITTER_HASHFLAGS_REGEX}` matched the returned archive url `{archive_url}` ," +
-                " this means that the archive was corrupted and shouldn't be used, please try again in 30 minutes")
+            logger.error("Hashflasgs regex `%s matched the returned archive url `%s` ," +
+                " this means that the archive was corrupted and shouldn't be used, sleeping for 30 minutes".
+                constants.TWITTER_HASHFLAGS_REGEX, archive_url)
+            archive_url = None
+            time.sleep(30 * 60)
 
-        return archive_url
+            continue
+
+        else:
+            logger.debug("archive_url `%s` did not match the regex `%s`, returning",
+                archive_url, constants.TWITTER_HASHFLAGS_REGEX)
+            return archive_url
 
     # if we get here, then we ran out of tries
-    raise Exception("did not get a good result when trying to save the url `%s` in the wayback machine, errors: `%s`",
-        url, error_list)
+    raise Exception(f"did not get a good result when trying to save the url `{url}` in the wayback machine, errors: `{error_list}`")
 
 
 def build_emote_config_from_argparse_args(args):
