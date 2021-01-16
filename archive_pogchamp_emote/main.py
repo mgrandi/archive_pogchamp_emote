@@ -45,9 +45,14 @@ def main():
         dest="log_to_file",
         type=utils.isFileType(False),
         help="save the application log to a file as well as print to stdout")
-    parser.add_argument("--testing",
+    parser.add_argument("--no-wbm-save",
+        dest="no_wbm_save",
         action="store_true",
-        help="pass this in to set some settings for testing, such as don't save pages with the WBM")
+        help="use this to not save URLs in the wayback machine (for testing)")
+    parser.add_argument("--no-youtube-dl",
+        dest="no_youtube_dl",
+        action="store_true",
+        help="use this to not save videos with youtube-dl (for testing)")
     parser.add_argument("--verbose", action="store_true", help="Increase logging verbosity")
 
 

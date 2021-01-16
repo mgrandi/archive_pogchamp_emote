@@ -53,4 +53,5 @@ class DailyPogchampEmoteConfig:
     extra_warc_headers:typing.Sequence[WarcHeader] = attr.ib()
     additional_urls_to_include_in_warc:typing.Sequence[str] = attr.ib()
     additional_urls_to_save_via_wbm:typing.Sequence[str] = attr.ib()
+    additional_urls_to_save_via_youtube_dl:typing.Sequence[str] = attr.ib()
 

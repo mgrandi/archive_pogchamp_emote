@@ -6,6 +6,8 @@ import subprocess
 import re
 import argparse
 import platform
+import urllib
+import hashlib
 
 import arrow
 import pyhocon
@@ -17,6 +19,7 @@ import youtube_dl
 
 from archive_pogchamp_emote import constants as constants
 from archive_pogchamp_emote import model as model
+from archive_pogchamp_emote import utils as utils
 
 logger = logging.getLogger(__name__)
 
@@ -127,19 +130,82 @@ def youtube_dl_progress_hook(logger_to_use):
     return _inner_youtube_dl_progress_hook
 
 
-def save_video_with_youtube_dl(ytdl_args_dict, url):
+def save_video_with_youtube_dl(root_videos_folder, url, ytdl_args_file_format, dry_run=False):
     '''
     download a url with youtube-dl, given the arguments and a url to download
 
     see https://github.com/ytdl-org/youtube-dl#embedding-youtube-dl
+
+    @param root_videos_folder - the folder where we will create a directory to store the video  + arguments in
+    @param url - the url to download
+    @param ytdl_args_file_format - the format of the ytdl args file we will write
+    @param dry_run if true, then we will only print out what we will do
     '''
 
+    # create youtube-dl arguments
+    ytdl_logger = logger.getChild("ytdl")
 
-    with youtube_dl.YoutubeDL(ytdl_args_dict) as ydl:
-        ydl.download([url])
+    hasher = hashlib.sha1()
+    hasher.update(url.encode("utf-8"))
+    url_as_sha1 = hasher.hexdigest()
+    parsed_url = urllib.parse.urlparse(url)
+    hostname_of_url = parsed_url.netloc
+    video_output_folder_with_hostname_and_sha1 = root_videos_folder / f"video_{hostname_of_url}_{url_as_sha1}"
+
+    if not video_output_folder_with_hostname_and_sha1.exists():
+        logger.info("creating folder `%s`", video_output_folder_with_hostname_and_sha1)
+        video_output_folder_with_hostname_and_sha1.mkdir()
 
 
-def save_archive_of_webpage_in_wbm(url, dry_run):
+    if dry_run:
+
+        logger.info("DRY RUN - Would have downloaded video at `%s` to `%s`", video_output_folder_with_hostname_and_sha1)
+
+    else:
+
+        logger.info("Downloading video at `%s` to `%s`", url, video_output_folder_with_hostname_and_sha1)
+
+        # see https://github.com/ytdl-org/youtube-dl/blob/3e4cedf9e8cd3157df2457df7274d0c842421945/youtube_dl/YoutubeDL.py#L137-L312
+        ytdl_arguments_dict = {
+            "write_all_thumbnails": True,
+            "writesubtitles": True,
+            "allsubtitles": True, # YoutubeDL.py says that we need "writesubtitles" in order for this to work
+            "writeinfojson": True,
+            "writeannotations": True,
+            "writedescription": True,
+            "keepvideo": True,
+            "format": "bestvideo+bestaudio/best", # this should be default but lets explicitly set it just in case,
+            "newline": True,
+            "outtmpl": f"{video_output_folder_with_hostname_and_sha1}/{constants.YOUTUBE_DL_FILE_TEMPLATE_STR}",
+            # set because the progress outputs use carriage returns so it kinda messes up the stdout logging
+            # and looks weird in the file logging. So adding this supresses the default console progress
+            # logging, but doesn't prevent youtube-dl from calling the progress hooks it seems.
+            "noprogress": True,
+            "progress_hooks": [utils.youtube_dl_progress_hook(ytdl_logger)],
+            "logger": ytdl_logger,
+            # this seems to output extra stuff to both stdout and the ytdl logger, should report a bug about this...
+            # "verbose": True,
+        }
+
+        logger.debug("youtube-dl arguments: `%s`", ytdl_arguments_dict)
+
+        # write youtube-dl arguments file (for reference, we are just using youtube-dl as a library here)
+        ytl_arguments_path = video_output_folder_with_hostname_and_sha1 / ytdl_args_file_format
+        logger.info("writing youtube-dl arguments to `%s`", ytl_arguments_path)
+
+        with open(ytl_arguments_path, "w", encoding="utf-8") as f:
+
+            f.write(pprint.pformat(ytdl_arguments_dict))
+
+        logger.info("writing youtube-dl arguments was successful")
+
+        # now download the video
+
+        with youtube_dl.YoutubeDL(ytdl_arguments_dict) as ydl:
+            ydl.download([url])
+
+
+def save_archive_of_webpage_in_wbm(url, dry_run=False):
     '''
     saves a copy of the given URL in the Internet Archive wayback machine
     and returns the archive URL
@@ -150,6 +216,7 @@ def save_archive_of_webpage_in_wbm(url, dry_run):
     '''
 
     if dry_run:
+
         logger.info("DRY RUN: would have saved the url `%s` in the wayback machine", url)
         return
 
@@ -232,7 +299,7 @@ def build_emote_config_from_argparse_args(args):
     # set folder paths that require the date
     builder = builder.root_output_folder(root_folder_with_date)
     builder = builder.warc_output_folder(root_folder_with_date / "warc")
-    builder = builder.youtube_dl_output_folder(root_folder_with_date / "twitter_video")
+    builder = builder.youtube_dl_output_folder(root_folder_with_date / "videos")
     builder = builder.warc_tempdir_folder(root_folder_with_date / "warc")
     builder = builder.application_version_info_name(constants.APPLICATION_VERSION_FILE_FORMAT.format(date_str))
     builder = builder.warc_database_name(constants.WPULL_DATABASE_FORMAT.format(date_str))
@@ -240,7 +307,8 @@ def build_emote_config_from_argparse_args(args):
     builder = builder.warc_arguments_file_name(constants.WPULL_ARGS_FILE_FORMAT.format(date_str))
     builder = builder.warc_input_url_list_file_name(constants.WPULL_INPUT_URL_LIST_FORMAT.format(date_str))
     builder = builder.warc_file_name(constants.WPULL_WARC_FILE_FORMAT.format(date_str))
-    builder = builder.ytdl_arguments_file_name(constants.YTDL_ARGS_FILE_FORMAT.format(date_str))
+    # put the format replacement characters as the second part to not get a format error
+    builder = builder.ytdl_arguments_file_name(constants.YTDL_ARGS_FILE_FORMAT)
     builder = builder.emote_date(date_str)
 
     # stuff that we read from the configuration file
@@ -282,6 +350,9 @@ def build_emote_config_from_argparse_args(args):
         additional_urls_save_wbm.append(iter_url.format(twitch_emote_id))
 
     builder = builder.additional_urls_to_save_via_wbm(additional_urls_save_wbm)
+
+    additional_ytdl_videos = root_config_section[constants.CONFIG_PATH_ADDITIONAL_URLS_SAVE_YTDL]
+    builder = builder.additional_urls_to_save_via_youtube_dl(additional_ytdl_videos)
 
 
     logger.debug("building DailyPogchampEmoteConfig object")

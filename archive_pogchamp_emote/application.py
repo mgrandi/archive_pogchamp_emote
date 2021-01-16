@@ -30,11 +30,6 @@ class Application:
 
         logger.info("starting, version `%s`, git hash `%s`", constants.WARC_HEADER_VALUE_APPLICATION_VERSION, utils.get_git_hash())
 
-        if self.args.testing:
-            logger.info("######################")
-            logger.info("#    TESTING MODE    #")
-            logger.info("######################")
-
         emote_config = utils.build_emote_config_from_argparse_args(self.args)
 
         wpull_pex_path = self.args.wpull_pex_path
@@ -132,7 +127,7 @@ class Application:
                 len(emote_config.streamer_social_media_urls))
             for idx, iter_social_media_url in enumerate(emote_config.streamer_social_media_urls):
 
-                streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url, self.args.testing)
+                streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url, self.args.no_wbm_save)
 
                 f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{constants.WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT.format(idx)}:{iter_social_media_url}\n")
@@ -142,7 +137,7 @@ class Application:
 
             # link to the twitter.com post by the Twitch user account announcing the emote of the day
             logger.info("saving the announcement twitter.com/twitch post via the Wayback Machine")
-            twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url, self.args.testing)
+            twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url, self.args.no_wbm_save)
 
             f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_STREAMER_TWICH_TWEET_URL}:{emote_config.twitch_twitter_post_url}\n")
@@ -153,12 +148,12 @@ class Application:
             #########################################################################
             # any other links the configuration file says to include as headers (plus the WBM backup)
             #########################################################################
-            logger.info("saving `%s` additional urls via the Wayback Machine",
+            logger.info("saving `%s` additional url(s) via the Wayback Machine",
                 len(emote_config.additional_urls_to_save_via_wbm))
 
             for idx, iter_additional_url in enumerate(emote_config.additional_urls_to_save_via_wbm):
 
-                iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(iter_additional_url, self.args.testing)
+                iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(iter_additional_url, self.args.no_wbm_save)
 
                 f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{constants.WARC_HEADER_ADDITIONAL_URL_FORMAT.format(idx)}:{iter_additional_url}\n")
@@ -216,59 +211,41 @@ class Application:
         # save twitter.com/twitch twitter post with youtube-dl
         #########################################################################
         if emote_config.twitch_twitter_post_is_video:
-            # create youtube-dl arguments
-            ytdl_logger = logger.getChild("ytdl")
 
-            # see https://github.com/ytdl-org/youtube-dl/blob/3e4cedf9e8cd3157df2457df7274d0c842421945/youtube_dl/YoutubeDL.py#L137-L312
-            ytdl_arguments_dict = {
-                "write_all_thumbnails": True,
-                "writesubtitles": True,
-                "allsubtitles": True, # YoutubeDL.py says that we need "writesubtitles" in order for this to work
-                "writeinfojson": True,
-                "writeannotations": True,
-                "writedescription": True,
-                "keepvideo": True,
-                "format": "bestvideo+bestaudio/best", # this should be default but lets explicitly set it just in case,
-                "newline": True,
-                "outtmpl": f"{emote_config.youtube_dl_output_folder}/{constants.YOUTUBE_DL_FILE_TEMPLATE_STR}",
-                # set because the progress outputs use carriage returns so it kinda messes up the stdout logging
-                # and looks weird in the file logging. So adding this supresses the default console progress
-                # logging, but doesn't prevent youtube-dl from calling the progress hooks it seems.
-                "noprogress": True,
-                "progress_hooks": [utils.youtube_dl_progress_hook(ytdl_logger)],
-                "logger": ytdl_logger,
-                # this seems to output extra stuff to both stdout and the ytdl logger, should report a bug about this...
-                # "verbose": True,
-            }
 
-            logger.debug("youtube-dl arguments: `%s`", ytdl_arguments_dict)
+            logger.info("Downloading the twitter.com/twitch announcement video")
 
-            # write youtube-dl arguments file (for reference, we are just using youtube-dl as a library here)
-            ytl_arguments_path = emote_config.root_output_folder / emote_config.ytdl_arguments_file_name
-            logger.info("writing youtube-dl arguments to `%s`", ytl_arguments_path)
+            utils.save_video_with_youtube_dl(emote_config.youtube_dl_output_folder,
+                emote_config.twitch_twitter_post_url,
+                emote_config.ytdl_arguments_file_name,
+                self.args.no_youtube_dl)
 
-            with open(ytl_arguments_path, "w", encoding="utf-8") as f:
-
-                f.write(pprint.pformat(ytdl_arguments_dict))
-
-            logger.info("writing youtube-dl arguments was successful")
-
-            # now download the twitter video
-
-            logger.info("Downloading any twitter videos to `%s`", emote_config.youtube_dl_output_folder)
-            utils.save_video_with_youtube_dl(ytdl_arguments_dict, emote_config.twitch_twitter_post_url)
             logger.info("video download successful")
 
         else:
             logger.info("config has marked that the Twitch twitter post was not a video, not calling youtube-dl")
 
-            no_video_txt_path = emote_config.youtube_dl_output_folder / "no_video.txt"
+            filename = "no_twitch.com_twitter_announcement_video.txt"
+            no_video_txt_path = emote_config.youtube_dl_output_folder / "no_twitch.com_twitter_announcement_video.txt"
             logger.info("writing `%s`", no_video_txt_path)
 
             with open(no_video_txt_path, "w", encoding="utf-8") as f:
                 f.write(f"no video because the configuration file specified that the twitter post `{emote_config.twitch_twitter_post_url}` had no video, so we skipped downloading it")
 
-            logger.info("writing no_video.txt was successful")
+            logger.info("writing `%s` was successful", filename)
+
+
+        #########################################################################
+        # save any other videos in the additional_urls_to_save_via_youtube_dl config
+        #########################################################################
+        logger.info("saving `%s` additional video(s) with youtube-dl",
+            len(emote_config.additional_urls_to_save_via_youtube_dl))
+
+        for iter_video_url in emote_config.additional_urls_to_save_via_youtube_dl:
+            utils.save_video_with_youtube_dl(emote_config.youtube_dl_output_folder,
+                iter_video_url,
+                emote_config.ytdl_arguments_file_name,
+                self.args.no_youtube_dl)
 
 
         #########################################################################

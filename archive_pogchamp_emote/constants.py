@@ -11,7 +11,7 @@ WPULL_WARC_FILE_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_warc"
 
 WPULL_INPUT_URL_LIST_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_url_list.txt"
 WPULL_ARGS_FILE_FORMAT = "{}_twitch-tv_pogchamp_emote_wpull_arguments.txt"
-YTDL_ARGS_FILE_FORMAT = "{}_twitch-tv_pogchamp_emote_youtube-dl_arguments.txt"
+YTDL_ARGS_FILE_FORMAT = "youtube_dl_args.txt"
 APPLICATION_VERSION_FILE_FORMAT = "{}_archive_pogchamp_emote_version_info.json"
 
 
@@ -28,6 +28,7 @@ CONFIG_PATH_DATE = "date"
 CONFIG_PATH_EXTRA_WARC_HEADERS = "extra_warc_headers"
 CONFIG_PATH_ADDITIONAL_URLS_SAVE_WARC = "additional_urls_to_include_in_warc"
 CONFIG_PATH_ADDITIONAL_URLS_SAVE_WBM = "additional_urls_to_save_via_wbm"
+CONFIG_PATH_ADDITIONAL_URLS_SAVE_YTDL = "additional_urls_to_save_via_youtube_dl"
 
 
 WPULL_INPUT_URLS_FORMAT_LIST = [
