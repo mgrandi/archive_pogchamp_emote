@@ -232,7 +232,7 @@ def save_archive_of_webpage_in_wbm(url, dry_run=False):
             logger.debug("try `%s/%s` on url `%s`", iter_try_idx, constants.WAYBACK_ATTEMPT_MAX, url)
             wayback_handle_for_url = waybackpy.Url(url, constants.HTTP_USER_AGENT)
 
-            logger.debug("calling save() on wayback handle for url: `%s`", wayback_handle_for_url)
+            logger.debug("calling save() on wayback handle for url: `%s`", repr(wayback_handle_for_url))
 
             archive = wayback_handle_for_url.save()
             archive_url = archive.archive_url
