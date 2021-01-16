@@ -79,28 +79,28 @@ WARC_HEADER_DESCRIPTION = "description"
 # use .format() here becaues we need to put some format string markers in the string to put in numeric instances later
 WARC_CUSTOM_HEADER_PREFIX = "X-twitch-daily-pogchamp-emote-"
 
-WARC_HEADER_KEY_APPLICATION_NAME = "{}application-name".formt(WARC_CUSTOM_HEADER_PREFIX)
-WARC_HEADER_VALUE_APPLICATION_NAME = "archive_pogchamp_emote".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_KEY_APPLICATION_NAME = "{}application-name".format(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_VALUE_APPLICATION_NAME = "archive_pogchamp_emote".format(WARC_CUSTOM_HEADER_PREFIX)
 
-WARC_HEADER_KEY_APPLICATION_VERSION = "{}application-version".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_KEY_APPLICATION_VERSION = "{}application-version".format(WARC_CUSTOM_HEADER_PREFIX)
 WARC_HEADER_VALUE_APPLICATION_VERSION = f"{__version__}"
 
-WARC_HEADER_KEY_APPLICATION_GITHUB_LINK = "{}application-github-link".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_KEY_APPLICATION_GITHUB_LINK = "{}application-github-link".format(WARC_CUSTOM_HEADER_PREFIX)
 WARC_HEADER_VALUE_APPLICATION_GITHUB_LINK= "https://github.com/mgrandi/archive_pogchamp_emote"
 
-WARC_HEADER_KEY_APPLICATION_GIT_HASH = "{}application-git-hash".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_KEY_APPLICATION_GIT_HASH = "{}application-git-hash".format(WARC_CUSTOM_HEADER_PREFIX)
 
-WARC_HEADER_STREAMER_TWITCH_LINK = "{}streamer-twitch-link".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_STREAMER_TWITCH_LINK = "{}streamer-twitch-link".format(WARC_CUSTOM_HEADER_PREFIX)
 WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT = "{}streamer-social-media-link-".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
 WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_WBM_FORMAT = "{}social-media-link-wbm-{}".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
 
-WARC_HEADER_STREAMER_TWICH_TWEET_URL = "{}twitch-tweet-link".formt(WARC_CUSTOM_HEADER_PREFIX)
-WARC_HEADER_STREAMER_TWICH_TWEET_URL_WBM = "{}twitch-tweet-link-wbm".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_STREAMER_TWICH_TWEET_URL = "{}twitch-tweet-link".format(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_STREAMER_TWICH_TWEET_URL_WBM = "{}twitch-tweet-link-wbm".format(WARC_CUSTOM_HEADER_PREFIX)
 
 WARC_HEADER_ADDITIONAL_URL_FORMAT = "{}additional-url-{}".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
 WARC_HEADER_ADDITIONAL_URL_WBM_FORMAT = "{}additional-url-wbm-{}".format(WARC_CUSTOM_HEADER_PREFIX, "{:03d}")
 
-WARC_HEADER_STREAMER_NAME = "{}twitch-tv-pogchamp-streamer-name".formt(WARC_CUSTOM_HEADER_PREFIX)
+WARC_HEADER_STREAMER_NAME = "{}streamer-name".format(WARC_CUSTOM_HEADER_PREFIX)
 
 
 
