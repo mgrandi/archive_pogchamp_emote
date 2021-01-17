@@ -127,7 +127,8 @@ class Application:
                 len(emote_config.streamer_social_media_urls))
             for idx, iter_social_media_url in enumerate(emote_config.streamer_social_media_urls):
 
-                streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(iter_social_media_url, self.args.no_wbm_save)
+                streamer_social_media_link_archive = utils.save_archive_of_webpage_in_wbm(
+                    iter_social_media_url, idx, len(emote_config.streamer_social_media_urls), self.args.no_wbm_save)
 
                 f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{constants.WARC_HEADER_STREAMER_SOCIAL_MEDIA_URL_FORMAT.format(idx)}:{iter_social_media_url}\n")
@@ -139,7 +140,8 @@ class Application:
             # link to the twitter.com post by the Twitch user account announcing the emote of the day
             #########################################################################
             logger.info("saving the announcement twitter.com/twitch post via the Wayback Machine")
-            twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(emote_config.twitch_twitter_post_url, self.args.no_wbm_save)
+            twitch_twitter_post_url_archive = utils.save_archive_of_webpage_in_wbm(
+                emote_config.twitch_twitter_post_url, 1, 1, self.args.no_wbm_save)
 
             f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_STREAMER_TWICH_TWEET_URL}:{emote_config.twitch_twitter_post_url}\n")
@@ -155,7 +157,8 @@ class Application:
 
             for idx, iter_additional_url in enumerate(emote_config.additional_urls_to_save_via_wbm):
 
-                iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(iter_additional_url, self.args.no_wbm_save)
+                iter_additional_url_archive = utils.save_archive_of_webpage_in_wbm(
+                    iter_additional_url, idx, len(emote_config.additional_urls_to_save_via_wbm), self.args.no_wbm_save)
 
                 f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
                 f.write(f"{constants.WARC_HEADER_ADDITIONAL_URL_FORMAT.format(idx)}:{iter_additional_url}\n")
