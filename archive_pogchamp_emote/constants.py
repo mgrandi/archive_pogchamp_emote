@@ -44,7 +44,7 @@ HTTP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/2010
 
 WAYBACK_ATTEMPT_MAX = 6
 
-YOUTUBE_DL_FILE_TEMPLATE_STR = "%(title)s-%(id)s.%(ext)s"
+YOUTUBE_DL_FILE_TEMPLATE_STR = "%(id)s.%(ext)s"
 
 ACCEPTABLE_WPULL_EXIT_CODES = [0, 4, 5, 8]
 
