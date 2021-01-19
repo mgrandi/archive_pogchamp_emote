@@ -160,7 +160,8 @@ def save_video_with_youtube_dl(root_videos_folder, url, ytdl_args_file_format, d
 
     if dry_run:
 
-        logger.info("DRY RUN - Would have downloaded video at `%s` to `%s`", video_output_folder_with_hostname_and_sha1)
+        logger.info("DRY RUN - Would have downloaded video at `%s` to `%s`",
+            url, video_output_folder_with_hostname_and_sha1)
 
     else:
 
