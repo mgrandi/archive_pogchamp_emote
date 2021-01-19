@@ -220,41 +220,36 @@ class Application:
         # save twitter.com/twitch twitter post with youtube-dl
         #########################################################################
 
-        # see if twitch actually made an announcement today
-        if emote_config.twitch_twitter_post_url:
 
-            # see if that announcement tweet contained a video
-            if emote_config.twitch_twitter_post_is_video:
+        # see if twitch actually made an announcement today and if that tweet contained a video
+        if emote_config.twitch_twitter_post_is_video and emote_config.twitch_twitter_post_url:
 
 
-                logger.info("Downloading the twitter.com/twitch announcement video")
+            logger.info("Downloading the twitter.com/twitch announcement video")
 
-                utils.save_video_with_youtube_dl(emote_config.youtube_dl_output_folder,
-                    emote_config.twitch_twitter_post_url,
-                    emote_config.ytdl_arguments_file_name,
-                    self.args.no_youtube_dl)
+            utils.save_video_with_youtube_dl(emote_config.youtube_dl_output_folder,
+                emote_config.twitch_twitter_post_url,
+                emote_config.ytdl_arguments_file_name,
+                self.args.no_youtube_dl)
 
-                logger.info("video download successful")
-
-            else:
-                logger.info("config has marked that the Twitch twitter post was not a video, not calling youtube-dl")
-
-                filename = "no_twitch.com_twitter_announcement_video.txt"
-                no_video_txt_path = emote_config.youtube_dl_output_folder / "no_twitch.com_twitter_announcement_video.txt"
-                logger.info("writing `%s`", no_video_txt_path)
-
-                with open(no_video_txt_path, "w", encoding="utf-8") as f:
-                    if emote_config.twitch_twitter_post_url:
-                        # twitter post was a tweet, but not a video
-                        f.write(f"no video because the configuration file specified that the twitter post `{emote_config.twitch_twitter_post_url}` had no video, so we skipped downloading it")
-
-                    else:
-                        f.write(f"No video because twitter did not tweet about today's pogchamp emote today at all")
-                logger.info("writing `%s` was successful", filename)
-
+            logger.info("video download successful")
 
         else:
-            logger.info("there was no Twitch twitter announcement post , so nothing to download with youtube-dl")
+            logger.info("config has marked that the Twitch twitter post was not a video, not calling youtube-dl")
+
+            filename = "no_twitch.com_twitter_announcement_video.txt"
+            no_video_txt_path = emote_config.youtube_dl_output_folder / "no_twitch.com_twitter_announcement_video.txt"
+            logger.info("writing `%s`", no_video_txt_path)
+
+            with open(no_video_txt_path, "w", encoding="utf-8") as f:
+                if emote_config.twitch_twitter_post_url:
+                    # twitter post was a tweet, but not a video
+                    f.write(f"no video because the configuration file specified that the twitter post `{emote_config.twitch_twitter_post_url}` had no video, so we skipped downloading it")
+
+                else:
+                    f.write(f"No video because twitter did not tweet about today's pogchamp emote today at all")
+            logger.info("writing `%s` was successful", filename)
+
 
 
         #########################################################################
