@@ -95,7 +95,7 @@ def check_completedprocess_for_acceptable_exit_codes(
     if not completed_process_obj.returncode in acceptable_exit_codes:
         completed_process_obj.check_returncode()
 
-def youtube_dl_progress_hook(logger_to_use):
+def youtube_dl_progress_hook(logger_to_use, idx, total):
     '''
     returns a downloader hook that logs to a logger we specify
 
@@ -103,6 +103,10 @@ def youtube_dl_progress_hook(logger_to_use):
     when using youtube-dl as a library and passing in a 'logger' to the
     configuration, which messes up the stdout logging and looks weird in
     file logging
+
+    @param logger_to_use - the logging.Logger instance to use
+    @param idx - the current video idx that we are downloading via youtube-dl, for logging
+    @param total - the total number of videos we will be downloading via youtube-dl , for logging
 
     '''
 
@@ -126,12 +130,13 @@ def youtube_dl_progress_hook(logger_to_use):
 
         '''
 
-        logger_to_use.info("download progress: `%s`", dl_progress_dictionary)
+        logger_to_use.info("[`%s/%s`] - download progress: `%s`",
+            idx, total, dl_progress_dictionary)
 
     return _inner_youtube_dl_progress_hook
 
 
-def save_video_with_youtube_dl(root_videos_folder, url, ytdl_args_file_format, dry_run=False):
+def save_video_with_youtube_dl(root_videos_folder, url, ytdl_args_file_format, idx, total, dry_run=False):
     '''
     download a url with youtube-dl, given the arguments and a url to download
 
@@ -140,6 +145,8 @@ def save_video_with_youtube_dl(root_videos_folder, url, ytdl_args_file_format, d
     @param root_videos_folder - the folder where we will create a directory to store the video  + arguments in
     @param url - the url to download
     @param ytdl_args_file_format - the format of the ytdl args file we will write
+    @param idx - the current index of videos that we are downloading with ytdl, for logging
+    @param total - the total number of videos we are donwloading with ytdl, for logging
     @param dry_run if true, then we will only print out what we will do
     '''
 
@@ -160,12 +167,13 @@ def save_video_with_youtube_dl(root_videos_folder, url, ytdl_args_file_format, d
 
     if dry_run:
 
-        logger.info("DRY RUN - Would have downloaded video at `%s` to `%s`",
-            url, video_output_folder_with_hostname_and_sha1)
+        logger.info("[`%s/%s`] - DRY RUN - Would have downloaded video at `%s` to `%s`",
+            idx, total, url, video_output_folder_with_hostname_and_sha1)
 
     else:
 
-        logger.info("Downloading video at `%s` to `%s`", url, video_output_folder_with_hostname_and_sha1)
+        logger.info("[`%s/%s`] - Downloading video at `%s` to `%s`",
+            idx, total, url, video_output_folder_with_hostname_and_sha1)
 
         # see https://github.com/ytdl-org/youtube-dl/blob/3e4cedf9e8cd3157df2457df7274d0c842421945/youtube_dl/YoutubeDL.py#L137-L312
         ytdl_arguments_dict = {
@@ -183,7 +191,7 @@ def save_video_with_youtube_dl(root_videos_folder, url, ytdl_args_file_format, d
             # and looks weird in the file logging. So adding this supresses the default console progress
             # logging, but doesn't prevent youtube-dl from calling the progress hooks it seems.
             "noprogress": True,
-            "progress_hooks": [utils.youtube_dl_progress_hook(ytdl_logger)],
+            "progress_hooks": [utils.youtube_dl_progress_hook(ytdl_logger, idx, total)],
             "logger": ytdl_logger,
             # this seems to output extra stuff to both stdout and the ytdl logger, should report a bug about this...
             # "verbose": True,

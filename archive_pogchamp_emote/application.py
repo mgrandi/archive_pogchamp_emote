@@ -220,10 +220,11 @@ class Application:
         # save twitter.com/twitch twitter post with youtube-dl
         #########################################################################
 
-
+        total_videos_to_dl = len(emote_config.additional_urls_to_save_via_youtube_dl)
+        current_idx_of_videos_to_dl = 1
         # see if twitch actually made an announcement today and if that tweet contained a video
         if emote_config.twitch_twitter_post_is_video and emote_config.twitch_twitter_post_url:
-
+            total_videos_to_dl += 1
 
             logger.info("Downloading the twitter.com/twitch announcement video")
 
@@ -231,6 +232,8 @@ class Application:
                 emote_config.twitch_twitter_post_url,
                 emote_config.ytdl_arguments_file_name,
                 self.args.no_youtube_dl)
+
+            current_idx_of_videos_to_dl += 1
 
             logger.info("video download successful")
 
@@ -258,10 +261,12 @@ class Application:
         logger.info("saving `%s` additional video(s) with youtube-dl",
             len(emote_config.additional_urls_to_save_via_youtube_dl))
 
-        for iter_video_url in emote_config.additional_urls_to_save_via_youtube_dl:
+        for idx, iter_video_url in enumerate(emote_config.additional_urls_to_save_via_youtube_dl, start=current_idx_of_videos_to_dl):
             utils.save_video_with_youtube_dl(emote_config.youtube_dl_output_folder,
                 iter_video_url,
                 emote_config.ytdl_arguments_file_name,
+                idx,
+                total_videos_to_dl,
                 self.args.no_youtube_dl)
 
 
