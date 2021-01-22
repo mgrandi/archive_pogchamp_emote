@@ -115,9 +115,12 @@ class Application:
             f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
             f.write(f"{constants.WARC_HEADER_STREAMER_NAME}:{emote_config.streamer_name}\n")
 
-            # link to the streamer's twitch page
-            f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
-            f.write(f"{constants.WARC_HEADER_STREAMER_TWITCH_LINK}:{emote_config.streamer_twitch_url}\n")
+            # link to the streamer's twitch page, if there was a streamer today
+            if emote_config.streamer_twitch_url:
+                f.write(f"{constants.WPULL_ARGUMENT_WARC_HEADER}\n")
+                f.write(f"{constants.WARC_HEADER_STREAMER_TWITCH_LINK}:{emote_config.streamer_twitch_url}\n")
+            else:
+                logger.info("no streamer twitch url configured, not adding the header to the wpull arguments file")
 
 
             #########################################################################
